@@ -1,0 +1,3 @@
+When used in arrays, `downto` corresponds to [little endian](http://en.wikipedia.org/wiki/Endianness) . This means that the least significant bit is stored at the lowest position. So in `L downto R`, `L` corresponds to the Most Significant Bit (MSB) and `R` to the Least Significant Bit (LSB). `to` corresponds to [big endian](http://en.wikipedia.org/wiki/Endianness) . So in `L to R`, `L` is the LSB and `R` the MSB.
+
+In the VHDL snippet below, `little_endian` is initially `"0000_0001"` and `big_endian` is initially `"1000_0000"`:
