@@ -1,4 +1,5 @@
 ![[Pasted image 20241107144722.png]]
+![[Pasted image 20241202232652.png]]
 
 
 
@@ -120,6 +121,7 @@ network 2001:142:71::/48
 ```
 - R4(ISP)
 ```
+ipv6 unicast-routing
 router bgp 21
 
 bgp log-neighbor-changes
