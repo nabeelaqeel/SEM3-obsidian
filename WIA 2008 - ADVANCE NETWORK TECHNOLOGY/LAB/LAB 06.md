@@ -1,5 +1,5 @@
-![[../../images/Pasted image 20241203192515.png|Pasted image 20241203192515.png]]
-![[../../images/Pasted image 20241216165453.png|Pasted image 20241216165453.png]]
+![Pasted image 20241203192515.png](../../images/Pasted%20image%2020241203192515.png)
+![Pasted image 20241216165453.png](../../images/Pasted%20image%2020241216165453.png)
 1. DHCP for NET105 (private ip)
 - R3
 ```

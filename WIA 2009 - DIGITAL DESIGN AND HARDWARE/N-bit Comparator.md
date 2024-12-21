@@ -1,4 +1,4 @@
-![[../images/Pasted image 20241116164420.png|Pasted image 20241116164420.png]]
+![Pasted image 20241116164420.png](../images/Pasted%20image%2020241116164420.png)
 
 ```vhdl
 entity COMPARE8 is
@@ -16,7 +16,7 @@ end COMPARE8;
 | 01                  | 01 independently of A and B         |
 | 11(invalid options) | --                                  |
 |                     |                                     |
-![[../images/Pasted image 20241116164655.png|Pasted image 20241116164655.png]]
+![Pasted image 20241116164655.png](../images/Pasted%20image%2020241116164655.png)
 ```vhdl
 entity BIT_COMPARE is
     port(A, B, X_IN, Y_IN: in STD_LOGIC;
@@ -30,7 +30,7 @@ end BIT_COMPARE;
 | 10                  | 10 independently of A and B                                 |
 | 01                  | 01 independently of A and B                                 |
 | 11(invalid options) | --                                                          |
-![[../images/Pasted image 20241116165017.png|Pasted image 20241116165017.png]]
+![Pasted image 20241116165017.png](../images/Pasted%20image%2020241116165017.png)
 ```vhdl
 architecture STRUCTURE of COMPARE8 is
    component BIT_COMPARE
@@ -51,7 +51,7 @@ begin
 end STRUCTURE;
 ```
 
-![[../images/Pasted image 20241116165147.png|Pasted image 20241116165147.png]]
+![Pasted image 20241116165147.png](../images/Pasted%20image%2020241116165147.png)
 ```vhdl
 architecture STRUCTURE of COMPARE8 is
    component BIT_COMPARE

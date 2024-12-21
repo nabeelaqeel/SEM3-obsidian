@@ -1,6 +1,6 @@
 ## Contents
-- [[NAT#Use Local and Global NAT Terms]]
-- [[NAT#PAT Port Address Translation]]
+- [NAT \> Use Local and Global NAT Terms](#Use%20Local%20and%20Global%20NAT%20Terms)
+- [NAT \> PAT Port Address Translation](#PAT%20Port%20Address%20Translation)
 ## Use Local and Global NAT Terms
 - `inside local address`  :  The IP address assigned to a host on the inside network. This is the address configured as a parameter of the computer OS or received via dynamic address allocation protocols such as DHCP. The address is likely not a legitimate IP address assigned by the Network Information Center (NIC) or service provider.
 - `inside global address` : A legitimate IP address assigned by the NIC or service provider that represents one or more inside local IP addresses to the outside world.
@@ -12,7 +12,7 @@ Packets sourced on the inside portion of the network have an inside local addres
 
 Conversely, when a packet is sourced on the outside portion of the network, while it is on the outside network, its source address is known as the outside global address. The destination of the packet is known as the inside global address. When the same packet gets switched to the inside network, the source address is known as the outside local address and the destination of the packet is known as the inside local address.
 
-**![[../images/Pasted image 20241107235959.png|Pasted image 20241107235959.png]]**
+**![Pasted image 20241107235959.png](../images/Pasted%20image%2020241107235959.png)**
 
 
 ### Example Configuration
@@ -41,7 +41,7 @@ Pro    Inside global       Inside local        Outside local      Outside global
 icmp   172.16.68.5:15      10.10.10.1:15       172.16.68.1:15     172.16.68.1:15
 ---    172.16.68.5         10.10.10.1
 ```
-![[../images/Pasted image 20241108000520.png|Pasted image 20241108000520.png]]
+![Pasted image 20241108000520.png](../images/Pasted%20image%2020241108000520.png)
 
 
 #### Define Outside Local and Outside Global Addresses
@@ -66,7 +66,7 @@ Pro     Inside global     Inside local       Outside local        Outside global
 icmp    10.10.10.1:37     10.10.10.1:37      10.10.10.5:37        172.16.68.1:37
 ```
 
-![[../images/Pasted image 20241108000849.png|Pasted image 20241108000849.png]]
+![Pasted image 20241108000849.png](../images/Pasted%20image%2020241108000849.png)
 
 #### Define All Local and Global Addresses
 

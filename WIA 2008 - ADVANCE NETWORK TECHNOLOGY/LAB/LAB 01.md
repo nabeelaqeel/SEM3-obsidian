@@ -1,4 +1,4 @@
-![[../../images/Pasted image 20241112002848.png|Pasted image 20241112002848.png]]
+![Pasted image 20241112002848.png](../../images/Pasted%20image%2020241112002848.png)
 
 ## Configuration
 

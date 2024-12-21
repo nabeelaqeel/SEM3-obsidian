@@ -2,13 +2,13 @@ Use empsat.sav to answer all the questions.
 1. What is the frequency for the number of hours worked for the employees?
 - Analyze > Descriptive Statistics > Frequencies
 
-![[../images/Pasted image 20241219125351.png|Pasted image 20241219125351.png]]
+![Pasted image 20241219125351.png](../images/Pasted%20image%2020241219125351.png)
 
   
 2. Draw any chart to show how long the employees have worked for the employer. Explain.
 
 - Graphs > Chart Builder
-![[../images/Pasted image 20241219130103.png|Pasted image 20241219130103.png]]
+![Pasted image 20241219130103.png](../images/Pasted%20image%2020241219130103.png)
 
 3. 3. Provide the Mean and SD for the statements below. Based on your results, what  can you conclude? Write a short paragraph of your conclusion to be presented to  your boss.  
 
@@ -22,7 +22,7 @@ The company culture promotes ethical behavior.
 
 - Analyze > Descriptive Statistics > Descriptives
 
-![[../images/Pasted image 20241219131712.png|Pasted image 20241219131712.png]]
+![Pasted image 20241219131712.png](../images/Pasted%20image%2020241219131712.png)
 
 4. Is there a significant gender differences for the overall satisfaction of the job? Write the hypotheses and then test them with an appropriate test. Provide all the necessary values.
 

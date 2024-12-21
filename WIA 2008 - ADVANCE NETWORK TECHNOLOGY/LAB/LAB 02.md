@@ -1,4 +1,4 @@
-![[../../images/Pasted image 20241112002824.png|Pasted image 20241112002824.png]]
+![Pasted image 20241112002824.png](../../images/Pasted%20image%2020241112002824.png)
 
 1. Configure Etherchannel
 - DSW1

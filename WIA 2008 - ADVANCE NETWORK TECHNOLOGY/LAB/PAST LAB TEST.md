@@ -1,6 +1,6 @@
-![[../../images/Pasted image 20241209181249.png|Pasted image 20241209181249.png]]
+![Pasted image 20241209181249.png](../../images/Pasted%20image%2020241209181249.png)
 
-![[../../images/Pasted image 20241209181336.png|Pasted image 20241209181336.png]]
+![Pasted image 20241209181336.png](../../images/Pasted%20image%2020241209181336.png)
 1. ip addressing
 ```
 LAN 1 

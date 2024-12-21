@@ -1,4 +1,4 @@
-![[../../images/Pasted image 20241215220457.png|Pasted image 20241215220457.png]]
+![Pasted image 20241215220457.png](../../images/Pasted%20image%2020241215220457.png)
 
 ```
 network : 133.71.0.0/16

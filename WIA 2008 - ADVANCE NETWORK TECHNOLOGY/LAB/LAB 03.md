@@ -1,4 +1,4 @@
-![[../../images/Pasted image 20241112002806.png|Pasted image 20241112002806.png]]
+![Pasted image 20241112002806.png](../../images/Pasted%20image%2020241112002806.png)
 
 1. Etherchannel 
 - R1

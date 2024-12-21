@@ -1,6 +1,6 @@
 
 - IPV4 packet
-![[../images/Pasted image 20241116102315.png|Pasted image 20241116102315.png]]
+![Pasted image 20241116102315.png](../images/Pasted%20image%2020241116102315.png)
 
 
 - Tunneling is different from VPN because it use dedicated route while VPN go to internet
@@ -25,7 +25,7 @@
 
 - **keeps data secure by using cryptographic algorithms to generate a pair of keys: a public key and a private key**
 - 
-![[../images/Pasted image 20241116110858.png|Pasted image 20241116110858.png]]
+![Pasted image 20241116110858.png](../images/Pasted%20image%2020241116110858.png)
 
 
 ### Diffie-Hellman (DH) algorithm
