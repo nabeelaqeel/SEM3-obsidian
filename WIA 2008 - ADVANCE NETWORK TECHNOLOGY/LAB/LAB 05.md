@@ -1,4 +1,5 @@
 ![[Pasted image 20241112090030.png]]
+![[Pasted image 20241217111735.png]]
 1. Peer ISP with eBGP
 ```
 int g0/2
@@ -62,7 +63,25 @@ show run | section line vty
 show ssh
 sh ip ssh
 ```
-3. Configure DSW4
+
+- R5
+```
+int g1/0
+ip add 142.71.2.200 255.255.255.128
+ipv6 add 2001:142:71:1::200/64
+
+ip default-gateway 142.71.2.134
+no ip routing
+```
+
+```
+ssh -l cisco 150.100.4.1 
+cisco
+```
+> R5 is used to test ssh to R4 
+
+
+1. Configure DSW4
 ```
 int range g0/0-2
 no negotiation auto
@@ -133,7 +152,7 @@ sh int tru
 
 - DSW3
 ```
-int range f3/2 - 3
+int range f3/1 - 3
 sw mode acc
 span portfast
 spanning-tree portfast bpduguard 
@@ -159,16 +178,21 @@ domain-name lab5.com
 
 - DSW1 
 ```
+int vlan 102
+standby 2 name vlan102_hsrp
 service dhcp
 
 int vlan 102
-ip helper-address 142.71.3.5
+ip helper-address 142.71.3.5 redundancy vlan102_hsrp
 ```
 - DSW2
 ```
 service dhcp
 int vlan 102
-ip helper-address 142.71.3.9
+standby 2 name vlan102_hsrp
+
+int vlan 102
+ip helper-address 142.71.3.9 redundancy vlan102_hsrp
 ```
 - Verification 
 ```
@@ -186,6 +210,11 @@ ip arp inspection vlan 102
 int range g0/0 - 1 , g 0/3 , g 1/0
 ip dhcp snooping trust
 ip arp inspection trust
+
+
+int range g 0/3 , g1/0
+no ip dhcp snooping trust
+no ip arp inspection trust
 ```
 
 - Verification
