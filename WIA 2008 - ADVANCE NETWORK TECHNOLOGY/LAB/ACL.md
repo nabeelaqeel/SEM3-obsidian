@@ -6,8 +6,3 @@ permit <ip> <wildmask>
 int <interface>
 ip access-group <group-name> [in|out]
 ```
-
-- DS
-```
-
-```

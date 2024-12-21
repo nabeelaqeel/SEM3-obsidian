@@ -61,11 +61,10 @@ source-ipv6-address} [port-number] {destination-ipv6-prefix/prefix-length
 ```
 ip access-list extended NET105
 remark "NET 105 should only be able to access DMZ and internet"
-permit icmp any any
-remark Permit NAT
-permit ip 192.168.0.0 0.0.0.127 142.71.5.64 0.0.0.3
 permit ip 192.168.0.0 0.0.0.127 142.71.5.0 0.0.0.63
 deny ip 192.168.0.0 0.0.0.127 142.71.0.0 0.0.255.255
+permit udp any any eq 67
+permit udp any any eq 68
 permit ip 192.168.0.0 0.0.0.127 any
 
 ```
@@ -82,7 +81,6 @@ ip access-group NET105 in
 ip access-list extended EXTERNAL
 remark "All external traffic can only access DMZ"
 remark Deny router interface for dmz
-deny ip any host 142.71.5.65
 deny ip any host 142.71.5.1
 permit ip any 142.71.5.0 0.0.0.63
 ```
@@ -108,9 +106,10 @@ ipv6 traffic-filter EXTERNAL_IPV6 in
 3. Internal network should be able to access all location except NET105
 - R3
 ```
-ip access-list standard INTERNAL
-remark "Internal network should be able to access all location except NET105"
-permit 192.168.0.0 0.0.0.127
+ip access-list extended INTERNAL
+remark "Allow internal network to access all except NET105"
+permit icmp any any echo-reply
+permit ip 192.168.0.0 0.0.0.127 any
 ```
 
 ```
@@ -124,8 +123,8 @@ ip access-group INTERNAL out
 ```
 ip access-list extended DMZ
 remark DMZ cannot initialize access to anywhere
+permit icmp any any echo-reply
 permit ospf any any
-permit icmp any any
 deny ip 142.71.5.0 0.0.0.63 any
 permit ip any any
 
@@ -139,7 +138,7 @@ ip access-group DMZ in
 ```
 ipv6 access-list DMZ_IPV6
 remark DMZ cannot initialize access to anywhere
-permit icmp any any
+permit icmp any any echo-reply
 deny 2001:142:71:14::/64 any 
 permit ipv6 any any
 ```
@@ -156,9 +155,9 @@ ipv6 traffic-filter DMZ_IPV6 in
 ip access-list extended INFRASTRUCTURE_R1
 remark "All external traffic can only access DMZ"
 remark Deny router interface for dmz
-deny ip any host 142.71.5.65
 deny ip any host 142.71.5.1
 permit ip any 142.71.5.0 0.0.0.63
+permit icmp any any echo-reply
 remark Enable Infrastructure ACL on R1
 remark Deny special-use address sources
 deny ip host 0.0.0.0 any
@@ -190,6 +189,7 @@ remark All external traffic can only access DMZ
 remark Deny router interface for dmz
 deny ipv6 any 2001:142:71:14::1/128 
 permit ipv6 any 2001:142:71:14::/64
+permit icmp any any echo-reply
 remark _Deny your space as source from entering your AS_
 deny ipv6 2001:142:71::/48 any
 remark _Permit multiprotocol BGP_

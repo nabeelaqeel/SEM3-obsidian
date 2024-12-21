@@ -12,7 +12,7 @@ Packets sourced on the inside portion of the network have an inside local addres
 
 Conversely, when a packet is sourced on the outside portion of the network, while it is on the outside network, its source address is known as the outside global address. The destination of the packet is known as the inside global address. When the same packet gets switched to the inside network, the source address is known as the outside local address and the destination of the packet is known as the inside local address.
 
-**![Pasted image 20241107235959.png](../images/Pasted%20image%2020241107235959.png)**
+**![Pasted image 20241107235959.png](../../images/Pasted%20image%2020241107235959.png)**
 
 
 ### Example Configuration
@@ -41,7 +41,7 @@ Pro    Inside global       Inside local        Outside local      Outside global
 icmp   172.16.68.5:15      10.10.10.1:15       172.16.68.1:15     172.16.68.1:15
 ---    172.16.68.5         10.10.10.1
 ```
-![Pasted image 20241108000520.png](../images/Pasted%20image%2020241108000520.png)
+![Pasted image 20241108000520.png](../../images/Pasted%20image%2020241108000520.png)
 
 
 #### Define Outside Local and Outside Global Addresses
@@ -66,7 +66,7 @@ Pro     Inside global     Inside local       Outside local        Outside global
 icmp    10.10.10.1:37     10.10.10.1:37      10.10.10.5:37        172.16.68.1:37
 ```
 
-![Pasted image 20241108000849.png](../images/Pasted%20image%2020241108000849.png)
+![Pasted image 20241108000849.png](../../images/Pasted%20image%2020241108000849.png)
 
 #### Define All Local and Global Addresses
 
