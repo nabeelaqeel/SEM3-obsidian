@@ -77,4 +77,4 @@ A socket descriptor (sometimes referred to as a socket number) is a binary integ
 
 
 
-![[Pasted image 20241114231458.png]]
+![[../images/Pasted image 20241114231458.png|Pasted image 20241114231458.png]]

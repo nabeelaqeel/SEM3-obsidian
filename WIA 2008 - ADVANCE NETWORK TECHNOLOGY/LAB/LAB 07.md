@@ -1,6 +1,6 @@
-![[Pasted image 20241203192538.png]]
+![[../../images/Pasted image 20241203192538.png|Pasted image 20241203192538.png]]
 
-![[Pasted image 20241220101204.png]]
+![[../../images/Pasted image 20241220101204.png|Pasted image 20241220101204.png]]
 1. Shift all ACL from R2 To R-GW
 - R2
 ```

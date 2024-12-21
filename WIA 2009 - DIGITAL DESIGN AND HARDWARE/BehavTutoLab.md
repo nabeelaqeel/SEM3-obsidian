@@ -15,7 +15,7 @@
 
 2. Write a VHDL code using Behavioral Design Style that
 
-![[Pasted image 20241208204412.png]]
+![[../images/Pasted image 20241208204412.png|Pasted image 20241208204412.png]]
 
 a. consist of only a single process
 

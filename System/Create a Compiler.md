@@ -1,5 +1,5 @@
 
-![[Pasted image 20241221130451.png]]
+![[../images/Pasted image 20241221130451.png|Pasted image 20241221130451.png]]
 - Linux syscall
 	- https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md
 	- to write asm read this

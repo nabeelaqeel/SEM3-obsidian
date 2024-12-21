@@ -1,5 +1,5 @@
-![[Pasted image 20241112090030.png]]
-![[Pasted image 20241217111735.png]]
+![[../../images/Pasted image 20241112090030.png|Pasted image 20241112090030.png]]
+![[../../images/Pasted image 20241217111735.png|Pasted image 20241217111735.png]]
 1. Peer ISP with eBGP
 ```
 int g0/2

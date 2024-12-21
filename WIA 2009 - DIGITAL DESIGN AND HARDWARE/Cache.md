@@ -1,5 +1,5 @@
-![[Pasted image 20241212184326.png]]
-![[Pasted image 20241212184401.png]]
+![[../images/Pasted image 20241212184326.png|Pasted image 20241212184326.png]]
+![[../images/Pasted image 20241212184401.png|Pasted image 20241212184401.png]]
 - L1 :
 	- Cache size : 16KB - 128KB
 	- Associativity : 2 - 8 Ways

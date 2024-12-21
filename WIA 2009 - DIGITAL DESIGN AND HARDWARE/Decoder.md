@@ -1,7 +1,7 @@
 
 ## 2 to 4 Decoder
-![[Pasted image 20241113110909.png]]
-![[Pasted image 20241113111309.png]]
+![[../images/Pasted image 20241113110909.png|Pasted image 20241113110909.png]]
+![[../images/Pasted image 20241113111309.png|Pasted image 20241113111309.png]]
 ```vhdl
 LIBRARY ieee ;
 USE ieee.std_logic_1164.all ;
@@ -28,8 +28,8 @@ END Dataflow
 ```
 
 ## 4 to 16 decoder
-![[Pasted image 20241113111633.png]]
-![[Pasted image 20241113111711.png]]
+![[../images/Pasted image 20241113111633.png|Pasted image 20241113111633.png]]
+![[../images/Pasted image 20241113111711.png|Pasted image 20241113111711.png]]
 ```vhdl
 LIBRARY ieee ;
 USE ieee.std_logic_1164.all ;
