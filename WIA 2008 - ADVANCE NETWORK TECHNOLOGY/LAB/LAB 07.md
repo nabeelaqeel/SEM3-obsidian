@@ -1,6 +1,98 @@
 ![Pasted image 20241203192538.png](../../images/Pasted%20image%2020241203192538.png)
 
 ![Pasted image 20241220101204.png](../../images/Pasted%20image%2020241220101204.png)
+
+
+
+1. Reconfigure
+- R2
+```
+int g4/0
+ip add 142.71.3.29 255.255.255.252
+ipv6 add 2001:142:71:12::1/64
+```
+
+```
+router ospf 1
+network 142.71.3.28 0.0.0.3 area 60
+area 60 authentication message-digest
+
+
+int g4/0
+ip ospf network point-to-point
+ipv6 ospf network point-to-point
+ip ospf message-digest-key 1 md5 CISCO
+
+ipv6 unicast-routing
+int g4/0
+ipv6 ospf 1 area 60
+ipv6 ospf authentication ipsec spi 262 md5 1234567890ABCDEF1234567890ABCDEF
+
+ipv6 router ospf 1
+```
+
+- R-GW
+```
+int g4/0
+ip add 142.71.3.30 255.255.255.252
+ipv6 add 2001:142:71:12::2/64
+
+int g1/0
+ip add 100.100.71.1 255.255.255.252
+ipv6 add 2001:100:100:71::/127
+
+int lo0
+ip add 142.71.4.4 255.255.255.255
+ipv6 add 2001:142:71:9::4/128
+```
+
+```
+router ospf 1
+network 142.71.3.28 0.0.0.3 area 60
+area 60 authentication message-digest
+passive-interface g1/0
+default-information originate always
+
+
+int g4/0
+ip ospf network point-to-point
+ipv6 ospf network point-to-point
+ip ospf message-digest-key 1 md5 CISCO
+
+ipv6 unicast-routing
+int g4/0
+ipv6 ospf 1 area 60
+ipv6 ospf authentication ipsec spi 262 md5 1234567890ABCDEF1234567890ABCDEF
+
+ipv6 router ospf 1
+passive-interface g1/0
+default-information originate always
+```
+
+```
+router bgp 20
+bgp router-id 1.1.1.1
+neighbor 100.100.71.2 remote-as 21
+network 142.71.0.0 mask 255.255.0.0 
+```
+
+```
+router bgp 20
+
+bgp log-neighbor-changes
+neighbor 2001:100:100:71::1 remote-as 21
+address-family ipv6
+neighbor 2001:100:100:71::1 activate
+network 2001:142:71::/48
+```
+
+```
+ip route 142.71.0.0 255.255.0.0 null0
+ipv6 route 2001:142:71::/48 null0
+```
+> remove passive interface first 
+> remove default-information originate always on R2
+
 1. Shift all ACL from R2 To R-GW
 - R2
 ```
@@ -13,12 +105,116 @@ no ipv6 traffic-filter INFRASTRUCTURE_R1_IPV6 in
 ```
 - R-GW
 ```
+ip access-list extended INFRASTRUCTURE
+remark "All external traffic can only access DMZ"
+remark Deny router interface for dmz
+deny ip any host 142.71.5.1
+permit ip any 142.71.5.0 0.0.0.63
+permit icmp any any echo-reply
+remark Enable Infrastructure ACL on R1
+remark Deny special-use address sources
+deny ip host 0.0.0.0 any
+deny ip 127.0.0.0 0.255.255.255 any
+deny ip 192.0.2.0 0.0.0.255 any
+deny ip 224.0.0.0 31.255.255.255 any
+remark Filter RFC 1918 space
+deny ip 10.0.0.0 0.255.255.255 any
+deny ip 172.16.0.0 0.15.255.255 any
+deny ip 192.168.0.0 0.0.255.255 any
+remark Deny your space as source from entering your AS
+deny ip 142.71.0.0 0.0.255.255 any
+remark Permit BGP
+permit tcp host 100.100.71.2 host 100.100.71.1 eq bgp
+permit tcp host 100.100.71.2 eq bgp host 100.100.71.1
+remark Deny Access to Internal Infrastructure Address
+deny ip any 142.71.0.0 0.0.255.255
+```
 
+```
+int g1/0
+ip access-group INFRASTRUCTURE_R1 in 
+```
+
+```
+ipv6 access-list INFRASTRUCTURE_R1_IPV6
+remark All external traffic can only access DMZ
+remark Deny router interface for dmz
+deny ipv6 any 2001:142:71:14::1/128 
+permit ipv6 any 2001:142:71:14::/64
+permit icmp any any echo-reply
+remark _Deny your space as source from entering your AS_
+deny ipv6 2001:142:71::/48 any
+remark _Permit multiprotocol BGP_
+permit tcp host 2001:100:100:71::1 host 2001:100:100:71:: eq bgp
+permit tcp host 2001:100:100:71::1 eq bgp host 2001:100:100:71::
+remark _Deny access to internal infrastructure addresses_
+deny ipv6 any 2001:142:71::/48
+```
+
+```
+int g4/0
+ipv6 traffic-filter INFRASTRUCTURE_R1_IPV6 in
 ```
 
 2. Change ISP configuration
 
+- Change it 
+```
+interface GigabitEthernet0/0.10
+encapsulation dot1Q 10
+ip address 192.168.10.1 255.255.255.252
+ 
+interface GigabitEthernet0/0.20
+encapsulation dot1Q 20
+ip address 192.168.20.1 255.255.255.252
+```
+
+
 3. Configure GRE NET 105 with other team
 
-4. Create IPSEC VPN between R-GW from VLAN 103 to DMZ
+- R3
+```
+int tunnel 1
+ip add 172.16.1.1 255.255.255.252
+ip mtu 1400
+ip tcp adjust-mss 1360
+tunnel source 142.71.3.22
+tunnel destination <ip>
+```
 
+```
+ip route 192.168.0.0 255.255.255.128 172.16.1.2
+```
+
+Reference : [Cisco Community](https://community.cisco.com/t5/networking-knowledge-base/how-to-configure-a-gre-tunnel/ta-p/3131970)
+![[../../images/Pasted image 20241221234330.png]]
+
+5. Create IPSEC VPN between R-GW from VLAN 103 to DMZ
+
+ - 
+```
+crypto isakmp policy 1
+encryption aes
+hash sha25
+authenticatoin pre-share
+group 2
+lifetime 86400
+```
+
+```
+cyrpto isakmp client configuration group rtr-remote
+key secret-passwor
+dns 1.1.1.1
+domain lab7.com
+```
+
+```
+ip local pool dynpool 
+```
+
+
+Reference :
+- [Cisco](https://www.cisco.com/c/en/us/support/docs/routers/1700-series-modular-access-routers/71462-rtr-l2l-ipsec-split.html)
+- [Cisco Configuring IPSec PDF](https://www.cisco.com/c/en/us/td/docs/routers/interface-module-lorawan/software/configuration/guide/b_lora_scg/iipsec.pdf)
+- [Cisco](https://www.cisco.com/en/US/docs/routers/access/800/850/software/configuration/guide/vpngre.html)
+- 

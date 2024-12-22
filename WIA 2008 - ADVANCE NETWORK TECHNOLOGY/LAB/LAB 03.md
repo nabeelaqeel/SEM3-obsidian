@@ -183,7 +183,7 @@ ip add 142.71.4.3 255.255.255.255
 ipv6 add 2001:142:71:9::3/128
 
 
-ipv6 router ospf 1
+ipv6 router ospf 1 o
 ```
 
 - DSW1
