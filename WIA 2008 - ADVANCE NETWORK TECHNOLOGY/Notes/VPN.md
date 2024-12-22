@@ -3,3 +3,16 @@
 
 
 - https://youtu.be/qgzpJnStGto
+
+
+---
+
+## ISAKMP 
+
+
+
+![[../../images/Pasted image 20241222083022.png]]
+
+
+Reference
+- [Cisco Community](https://community.cisco.com/t5/security-knowledge-base/isakmp/ta-p/3113882)

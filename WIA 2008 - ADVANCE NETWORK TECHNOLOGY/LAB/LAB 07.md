@@ -195,21 +195,18 @@ Reference : [Cisco Community](https://community.cisco.com/t5/networking-knowledg
 ```
 crypto isakmp policy 1
 encryption aes
-hash sha25
+hash sha256
 authenticatoin pre-share
 group 2
 lifetime 86400
-```
 
-```
-cyrpto isakmp client configuration group rtr-remote
-key secret-passwor
-dns 1.1.1.1
-domain lab7.com
-```
+crypto isakmp key 0 MYPASSWORD address <destination_ip>
+crypto ipsec transform-set MYTRANSFORMSET esp-aes esp-sha-hmac
 
-```
-ip local pool dynpool 
+crypto map CRYPTOMAP 10 ipcsec-isakmp
+set peer <destination_ip>
+set transform-set MYTRANSFORMSET
+match address 100
 ```
 
 
