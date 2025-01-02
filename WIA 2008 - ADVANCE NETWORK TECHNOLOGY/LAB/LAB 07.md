@@ -191,7 +191,6 @@ Reference : [Cisco Community](https://community.cisco.com/t5/networking-knowledg
 
 5. Create IPSEC VPN between R-GW from VLAN 103 to DMZ
 
- - 
 ```
 crypto isakmp policy 1
 encryption aes
@@ -209,6 +208,7 @@ set transform-set MYTRANSFORMSET
 match address 100
 ```
 
+> - Make sure the time is consistent across devices
 
 Reference :
 - [Cisco](https://www.cisco.com/c/en/us/support/docs/routers/1700-series-modular-access-routers/71462-rtr-l2l-ipsec-split.html)

@@ -44,7 +44,7 @@ VLAN 105 : 2 ip /30
 network : 142.71.5.64
 1st address : 142.71.5.65
 last adderess : 142.71.5.66
-broadcast : 142.71.5.63
+broadcast : 142.71.5.67
 
 NET 105
 192.168.0.0 : 2^7 : 128 - 2 :126 /25
@@ -177,7 +177,7 @@ last add: 192.168.100.2
 broadcast: 192.168.100.3
 
 
-R2 - R-G2
+R2 - R-GW
 network : 142.71.3.28
 1st ip : 142.71.3.29
 last add : 142.71.3.30
