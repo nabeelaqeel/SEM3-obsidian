@@ -186,3 +186,157 @@ broadcast : 142.71.3.31
 ipv6 1st : 2001:142:71:12::1/64
 ipv6 2nd : 2001:142:71:12::2/64
 
+- ISP
+```
+interface GigabitEthernet0/0.30
+encapsulation dot1Q 30
+ip add 100.100.71.2 255.255.255.252
+ipv6 add 2001:100:100:71::1/127
+
+router bgp 184
+neighbor 100.100.71.1 remote-as 20
+network 150.100.0.0 mask 255.255.0.0
+
+ip route 150.100.0.0 255.255.0.0 null0
+
+ipv6 unicast-routing
+router bgp 184
+
+bgp log-neighbor-changes
+neighbor 2001:100:100:71:: remote-as 20
+address-family ipv6
+neighbor 2001:100:100:71:: activate
+network 2001:150:100::/48
+
+ipv6 route 2001:150:100::/48 null0
+```
+
+```
+aaa new-model
+username cisco password 0 cisco
+
+ip domain-name cisco.com
+crypto key generate rsa
+
+ip ssh time-out 60
+ip ssh authentication-retries 2
+ip ssh version 2
+
+
+ip access-list standard SSH_ACCESS
+permit 142.71.2.128 0.0.0.127
+line vty 0 4
+access-class SSH_ACCESS in
+transport input ssh
+```
+
+
+- R-GW
+```
+int g0/1
+ip add 142.71.3.30 255.255.255.252
+ipv6 add 2001:142:71:12::2/64
+
+int g0/2
+ip add 100.100.71.1 255.255.255.252
+ipv6 add 2001:100:100:71::/127
+
+	int lo0
+ip add 142.71.4.4 255.255.255.255
+ipv6 add 2001:142:71:9::4/128
+
+
+router ospf 1
+network 142.71.3.28 0.0.0.3 area 60
+area 60 authentication message-digest
+passive-interface g0/2
+default-information originate always
+
+
+int g0/1
+ip ospf network point-to-point
+ipv6 ospf network point-to-point
+ip ospf message-digest-key 1 md5 CISCO
+
+
+ipv6 unicast-routing
+int g0/1
+ipv6 ospf 1 area 60
+ipv6 ospf authentication ipsec spi 262 md5 1234567890ABCDEF1234567890ABCDEF
+
+ipv6 router ospf 1
+passive-interface g0/2
+default-information originate always
+
+```
+
+```
+router bgp 20
+bgp router-id 1.1.1.1
+neighbor 100.100.71.2 remote-as 184
+network 142.71.0.0 mask 255.255.0.0 
+
+router bgp 20
+
+bgp log-neighbor-changes
+neighbor 2001:100:100:71::1 remote-as 184
+address-family ipv6
+neighbor 2001:100:100:71::1 activate
+network 2001:142:71::/48
+
+ip route 142.71.0.0 255.255.0.0 null0
+ipv6 route 2001:142:71::/48 null0
+```
+
+```
+ip access-list extended INFRASTRUCTURE
+remark "All external traffic can only access DMZ"
+remark Deny router interface for dmz
+deny ip any host 142.71.5.1
+permit ip any 142.71.5.0 0.0.0.63
+permit icmp any any echo-reply
+remark Enable Infrastructure ACL on R1
+remark Deny special-use address sources
+deny ip host 0.0.0.0 any
+deny ip 127.0.0.0 0.255.255.255 any
+deny ip 192.0.2.0 0.0.0.255 any
+deny ip 224.0.0.0 31.255.255.255 any
+remark Filter RFC 1918 space
+deny ip 10.0.0.0 0.255.255.255 any
+deny ip 172.16.0.0 0.15.255.255 any
+deny ip 192.168.0.0 0.0.255.255 any
+remark Deny your space as source from entering your AS
+deny ip 142.71.0.0 0.0.255.255 any
+remark Permit BGP
+permit tcp host 100.100.71.2 host 100.100.71.1 eq bgp
+permit tcp host 100.100.71.2 eq bgp host 100.100.71.1
+remark Deny Access to Internal Infrastructure Address
+deny ip any 142.71.0.0 0.0.255.255
+```
+
+```
+int g0/2
+ip access-group INFRASTRUCTURE in 
+```
+
+```
+ipv6 access-list INFRASTRUCTURE_IPV6
+remark All external traffic can only access DMZ
+remark Deny router interface for dmz
+deny ipv6 any 2001:142:71:14::1/128 
+permit ipv6 any 2001:142:71:14::/64
+permit icmp any any echo-reply
+remark _Deny your space as source from entering your AS_
+deny ipv6 2001:142:71::/48 any
+remark _Permit multiprotocol BGP_
+permit tcp host 2001:100:100:71::1 host 2001:100:100:71:: eq bgp
+permit tcp host 2001:100:100:71::1 eq bgp host 2001:100:100:71::
+remark _Deny access to internal infrastructure addresses_
+deny ipv6 any 2001:142:71::/48
+```
+
+```
+int g0/2
+ipv6 traffic-filter INFRASTRUCTURE_IPV6 in
+```
+

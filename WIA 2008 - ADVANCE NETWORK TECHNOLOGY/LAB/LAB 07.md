@@ -108,6 +108,7 @@ no ipv6 traffic-filter INFRASTRUCTURE_R1_IPV6 in
 ip access-list extended INFRASTRUCTURE
 remark "All external traffic can only access DMZ"
 remark Deny router interface for dmz
+permit gre host 142.71.3.22 host 142.84.0.34
 deny ip any host 142.71.5.1
 permit ip any 142.71.5.0 0.0.0.63
 permit icmp any any echo-reply
@@ -132,11 +133,11 @@ deny ip any 142.71.0.0 0.0.255.255
 
 ```
 int g1/0
-ip access-group INFRASTRUCTURE_R1 in 
+ip access-group INFRASTRUCTURE in 
 ```
 
 ```
-ipv6 access-list INFRASTRUCTURE_R1_IPV6
+ipv6 access-list INFRASTRUCTURE_IPV6
 remark All external traffic can only access DMZ
 remark Deny router interface for dmz
 deny ipv6 any 2001:142:71:14::1/128 
@@ -153,20 +154,25 @@ deny ipv6 any 2001:142:71::/48
 
 ```
 int g4/0
-ipv6 traffic-filter INFRASTRUCTURE_R1_IPV6 in
+ipv6 traffic-filter INFRASTRUCTURE_IPV6 in
 ```
 
 2. Change ISP configuration
 
 - Change it 
+
 ```
-interface GigabitEthernet0/0.10
-encapsulation dot1Q 10
-ip address 192.168.10.1 255.255.255.252
- 
-interface GigabitEthernet0/0.20
-encapsulation dot1Q 20
-ip address 192.168.20.1 255.255.255.252
+interface GigabitEthernet0/0.30
+encapsulation dot1Q 30
+ip add 100.100.71.2 255.255.255.252
+ipv6 add 2001:100:100:71::1/127
+
+```
+
+```
+int f0/11
+sw mode acc
+sw acc vlan 30
 ```
 
 
@@ -179,11 +185,11 @@ ip add 172.16.1.1 255.255.255.252
 ip mtu 1400
 ip tcp adjust-mss 1360
 tunnel source 142.71.3.22
-tunnel destination <ip>
+tunnel destination 142.84.0.34
 ```
 
 ```
-ip route 192.168.0.0 255.255.255.128 172.16.1.2
+ip route 192.168.84.0 255.255.255.128 172.16.1.2
 ```
 
 Reference : [Cisco Community](https://community.cisco.com/t5/networking-knowledge-base/how-to-configure-a-gre-tunnel/ta-p/3131970)
@@ -208,10 +214,25 @@ set transform-set MYTRANSFORMSET
 match address 100
 ```
 
+```
+permit ip <vlan 103> <friends-network>
+```
 > - Make sure the time is consistent across devices
 
 Reference :
 - [Cisco](https://www.cisco.com/c/en/us/support/docs/routers/1700-series-modular-access-routers/71462-rtr-l2l-ipsec-split.html)
 - [Cisco Configuring IPSec PDF](https://www.cisco.com/c/en/us/td/docs/routers/interface-module-lorawan/software/configuration/guide/b_lora_scg/iipsec.pdf)
 - [Cisco](https://www.cisco.com/en/US/docs/routers/access/800/850/software/configuration/guide/vpngre.html)
-- 
+
+
+## Change NET105
+
+NET 105
+192.168.71.0 : 2^7 : 128 - 2 :126 /25
+
+network      :  192.168.71.0
+1st ip       :  192.168.71.1
+last ip      :  192.168.71.126
+broadcast    :  192.168.71.127
+
+
