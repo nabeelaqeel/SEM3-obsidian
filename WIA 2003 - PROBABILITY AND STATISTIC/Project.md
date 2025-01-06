@@ -15,5 +15,9 @@ major public health problem
 ---
 ## Refence
 [National Strategic Plan to End TB (2021 - 2030)](https://www.moh.gov.my/moh/resources/Penerbitan/Penerbitan%20Utama/Buku_Garis_Panduan_NSPTB_2021-2023.pdf)
+		- (2023).*National Strategic Plan To End TB(2021-2030)*.Putrajaya, Malaysia: Ministry of Health Malaysia.
+
 [Tuberculosis Awareness Program and Associated Change in Knowledge Level of School Student](https://pmc.ncbi.nlm.nih.gov/articles/PMC3604846/)
+- Gothankar J. S. (2013). Tuberculosis awareness program and associated changes in knowledge levels of school students. _International journal of preventive medicine_, _4_(2), 153–157.
 [Malaysia Tuberculosis Country Profile](https://www.aidsdatahub.org/sites/default/files/resource/malaysia-tb-profile-2022.pdf)
+- (2022).*Tuberculosis prole: Malaysia*.Retrieves from https://www.aidsdatahub.org/sites/default/files/resource/malaysia-tb-profile-2022.pdf

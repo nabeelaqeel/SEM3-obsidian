@@ -110,6 +110,7 @@ ip access-list extended INTERNAL
 remark "Allow internal network to access all except NET105"
 permit icmp any any echo-reply
 permit ip 192.168.0.0 0.0.0.127 any
+permit ip 192.168.71.0 0.0.0.127 any
 ```
 
 ```

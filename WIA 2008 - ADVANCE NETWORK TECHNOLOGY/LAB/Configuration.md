@@ -7,7 +7,7 @@ VLAN 104 : 50 : 2^6 -2 : 62 /26
 2001:142:71::/48
 
 external ip : 150.100.0.0/16
-ipv6 : 2001:150:100::/48
+ipv6 : 2001:150:100::/48ds
 
 VLAN 3
 1st address : 142.71.0.1
@@ -275,7 +275,7 @@ router bgp 20
 bgp router-id 1.1.1.1
 neighbor 100.100.71.2 remote-as 184
 network 142.71.0.0 mask 255.255.0.0 
-
+network 100.100.71.0 mask 255.255.255.252
 router bgp 20
 
 bgp log-neighbor-changes
@@ -283,36 +283,13 @@ neighbor 2001:100:100:71::1 remote-as 184
 address-family ipv6
 neighbor 2001:100:100:71::1 activate
 network 2001:142:71::/48
+network 2001:100:100:71::/127
 
 ip route 142.71.0.0 255.255.0.0 null0
 ipv6 route 2001:142:71::/48 null0
 ```
 
-```
-ip access-list extended INFRASTRUCTURE
-remark "All external traffic can only access DMZ"
-remark Deny router interface for dmz
-deny ip any host 142.71.5.1
-permit ip any 142.71.5.0 0.0.0.63
-permit icmp any any echo-reply
-remark Enable Infrastructure ACL on R1
-remark Deny special-use address sources
-deny ip host 0.0.0.0 any
-deny ip 127.0.0.0 0.255.255.255 any
-deny ip 192.0.2.0 0.0.0.255 any
-deny ip 224.0.0.0 31.255.255.255 any
-remark Filter RFC 1918 space
-deny ip 10.0.0.0 0.255.255.255 any
-deny ip 172.16.0.0 0.15.255.255 any
-deny ip 192.168.0.0 0.0.255.255 any
-remark Deny your space as source from entering your AS
-deny ip 142.71.0.0 0.0.255.255 any
-remark Permit BGP
-permit tcp host 100.100.71.2 host 100.100.71.1 eq bgp
-permit tcp host 100.100.71.2 eq bgp host 100.100.71.1
-remark Deny Access to Internal Infrastructure Address
-deny ip any 142.71.0.0 0.0.255.255
-```
+
 
 ```
 int g0/2

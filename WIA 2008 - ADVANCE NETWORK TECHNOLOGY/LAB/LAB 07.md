@@ -1,4 +1,4 @@
-![Pasted image 20241203192538.png](../../images/Pasted%20image%2020241203192538.png)
+[[LAB 07]]![Pasted image 20241203192538.png](../../images/Pasted%20image%2020241203192538.png)
 
 ![Pasted image 20241220101204.png](../../images/Pasted%20image%2020241220101204.png)
 
@@ -108,7 +108,10 @@ no ipv6 traffic-filter INFRASTRUCTURE_R1_IPV6 in
 ip access-list extended INFRASTRUCTURE
 remark "All external traffic can only access DMZ"
 remark Deny router interface for dmz
-permit gre host 142.71.3.22 host 142.84.0.34
+permit ip host 100.100.61.1 host 100.100.71.1
+permit udp any any eq 500
+permit esp any any
+permit gre host 142.62.3.2 host 142.71.3.22
 deny ip any host 142.71.5.1
 permit ip any 142.71.5.0 0.0.0.63
 permit icmp any any echo-reply
@@ -132,7 +135,7 @@ deny ip any 142.71.0.0 0.0.255.255
 ```
 
 ```
-int g1/0
+int g0/2
 ip access-group INFRASTRUCTURE in 
 ```
 
@@ -182,43 +185,120 @@ sw acc vlan 30
 ```
 int tunnel 1
 ip add 172.16.1.1 255.255.255.252
+tunnel source 142.71.3.22
+tunnel destination 142.62.3.2
+```
+
+```
+ip route 192.168.0.0 255.255.255.128 172.16.1.2
+```
+
+```
+permit gre host 142.71.3.22 host 142.62.3.2
+```
+
+```
 ip mtu 1400
 ip tcp adjust-mss 1360
-tunnel source 142.71.3.22
-tunnel destination 142.84.0.34
 ```
-
-```
-ip route 192.168.84.0 255.255.255.128 172.16.1.2
-```
-
 Reference : [Cisco Community](https://community.cisco.com/t5/networking-knowledge-base/how-to-configure-a-gre-tunnel/ta-p/3131970)
 ![[../../images/Pasted image 20241221234330.png]]
 
 5. Create IPSEC VPN between R-GW from VLAN 103 to DMZ
-
+- R-GW
 ```
-crypto isakmp policy 1
+crypto isakmp policy 10
 encryption aes
-hash sha256
-authenticatoin pre-share
+hash md5
+authentication pre-share
 group 2
-lifetime 86400
 
-crypto isakmp key 0 MYPASSWORD address <destination_ip>
+crypto isakmp key MYPASSWORD address 100.100.62.1
 crypto ipsec transform-set MYTRANSFORMSET esp-aes esp-sha-hmac
+mode tunnel
 
-crypto map CRYPTOMAP 10 ipcsec-isakmp
-set peer <destination_ip>
+crypto map CRYPTOMAP 10 ipsec-isakmp
+set peer 100.100.62.1
 set transform-set MYTRANSFORMSET
-match address 100
+match address R-GW_IPSEC
 ```
 
 ```
-permit ip <vlan 103> <friends-network>
+ip access-list extended R-GW_IPSEC
+permit ip 142.71.0.0 0.0.255.255 142.62.0.0 0.0.255.255
+permit ip 142.62.0.0 0.0.255.255 142.71.0.0 0.0.255.255
 ```
+
+```
+ip access-list extended R-GW_IPSEC
+permit ip 142.71.0.0 0.0.1.255 142.62.5.0 0.0.0.63
+permit ip 142.71.5.0 0.0.0.63 142.62.0.0 0.0.1.255
+```
+
+```
+int g0/2
+crypto map CRYPTOMAP
+```
+
+```
+no ip route 142.62.0.0 255.255.0.0 100.100.62.1
+```
+
+```
+crypto isakmp enable
+```
+
+```
+clock set 10:50:00 Feb 3 2025
+```
+
+- IPv6
+- R-GW
+```
+crypto isakmp policy 10
+encryption aes
+hash md5
+authentication pre-share
+group 2
+
+crypto isakmp key secretkey address ipv6 2001:100:100:62::/127
+crypto ipsec transform-set IPV6-TRANSFORM esp-aes esp-sha-hmac
+mode tunnel
+
+crypto map ipv6 IPV6-CM 10 ipsec-isakmp
+set peer 2001:100:100:62::
+set transform-set IPV6-TRANSFORM
+match address R-GW_IPV6
+
+interface GigabitEthernet0/2
+ipv6 enable
+ipv6 crypto map IPV6-CM
+
+```
+
+```
+ipv6 access-list R-GW_IPV6
+permit ip 2001:142:71:3::/64 2001:142:62:112::/64
+permit ip 2001:142:71:14::/64 2001:142:62:103::/64
+```
+
+
+
+Verification 
+```
+sh crypto isakmp sa
+sh crypto ipsec sa int g0/2
+sh crypto map
+sh crypto session
+sh crypto session remote 100.100.62.1 detail
+```
+
 > - Make sure the time is consistent across devices
 
+Troubleshoot
+- [Cisco Community](https://community.cisco.com/t5/security-knowledge-base/site-to-site-vpn-troubleshooting-tips/ta-p/3111356)
+- [Cisco](https://www.cisco.com/c/en/us/support/docs/security/asa-5500-x-series-next-generation-firewalls/81824-common-ipsec-trouble.html)
+- 
 Reference :
 - [Cisco](https://www.cisco.com/c/en/us/support/docs/routers/1700-series-modular-access-routers/71462-rtr-l2l-ipsec-split.html)
 - [Cisco Configuring IPSec PDF](https://www.cisco.com/c/en/us/td/docs/routers/interface-module-lorawan/software/configuration/guide/b_lora_scg/iipsec.pdf)
@@ -234,5 +314,69 @@ network      :  192.168.71.0
 1st ip       :  192.168.71.1
 last ip      :  192.168.71.126
 broadcast    :  192.168.71.127
+
+- R3
+```
+int g4/0
+ip nat inside
+
+int port 1 
+ip nat outside
+
+ip nat pool pool1 142.71.5.65 142.71.5.65 prefix 30
+ip nat pool pool2 142.71.5.66 142.71.5.66 prefix 30
+
+no access-list 1 permit 192.168.0.0 0.0.0.63
+no access-list 2 permit 192.168.0.0 0.0.0.63
+
+access-list 1 permit 192.168.71.0 0.0.0.63
+access-list 2 permit 192.168.71.64 0.0.0.63
+
+
+ip nat inside source list 1 pool pool1 overload
+ip nat inside source list 2 pool pool2 overload
+
+int loopback 1
+ip add 142.71.5.65 255.255.255.252
+```
+
+- DSW6
+```
+int vlan 1
+no ip add 192.168.0.1 255.255.255.128
+ip add 192.168.71.1 255.255.255.128
+```
+
+- R3
+```
+ip dhcp pool DHCP_NET105
+network 192.168.71.0 255.255.255.128
+default-router 192.168.71.1 
+dns-server 192.168.71.1
+domain-name lab6.com
+```
+
+- PC6
+```
+ip 192.168.71.2 255.255.255.128 192.168.71.1
+```
+
+- R3
+```
+ip access-list extended NET105
+remark "NET 105 should only be able to access DMZ and internet"
+permit ip 192.168.71.0 0.0.0.127 142.71.5.0 0.0.0.63
+deny ip 192.168.71.0 0.0.0.127 142.71.0.0 0.0.255.255
+permit udp any any eq 67
+permit udp any any eq 68
+permit ip 192.168.71.0 0.0.0.127 any
+```
+
+```
+ip access-list extended INTERNAL
+remark "Allow internal network to access all except NET105"
+permit icmp any any echo-reply
+permit ip 192.168.71.0 0.0.0.127 any
+```
 
 

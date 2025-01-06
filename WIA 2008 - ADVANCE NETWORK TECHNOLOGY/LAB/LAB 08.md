@@ -30,14 +30,20 @@ sh lldpstatistic detail
 feature ntp
 
 ntp master 3
-ntp source loopback0
+ntp source g4/0
 ntp logging
 ```
 
-- R1,R2,R3
+- R2
 ```
-ntp server 142.71.4.4
-ntp source loopback0
+ntp server 142.71.3.30
+ntp source g4/0
+```
+
+- R1,R3
+
+```
+ntp server 142.71.3.30
 ```
 
 - Verification
@@ -52,12 +58,27 @@ Reference :
 - [Cisco ](https://www.cisco.com/c/en/us/td/docs/switches/datacenter/nexus5500/sw/system_management/7x/b_5500_System_Mgmt_Config_7x/configuring_ntp.pdf)
 
 1. Send [[Syslog]] Information to PRTG
-2. Configure [[Simple Network Management Protocol version 3 (SNMPv3)]] on R-GW
+
+
+1. Configure [[Simple Network Management Protocol version 3 (SNMPv3)]] on R-GW
 ```
 snmp-server group group1 v3 auth access lmnop
-
 ```
 
+```
+snmp-server group SNMP-GROUP v3 priv
+snmp-server user SNMP-USER SNMP-GROUP v3 auth md5 CISCO priv aes 128 CISCO
+snmp-server host <ip address> version 3 priv host-user
+```
+
+```
+snmp-server community public RO
+snmp-server community private RW
+```
+
+```
+snmp-server engineID local <word>
+```
 
 - Verification 
 ```
@@ -65,3 +86,6 @@ sh snmp group
 sh snmp user [username]
 sh snmp engineID
 ```
+
+Reference :
+- [Cisco](https://www.cisco.com/c/en/us/support/docs/ip/simple-network-management-protocol-snmp/7282-12.html)
