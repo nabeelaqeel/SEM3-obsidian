@@ -3,19 +3,16 @@
 1. Configure [[Link Layer Discovery Protocol (LLDP)]]
 
 - R-GW / ISP
-```
-int g0/1
-no sh
-commit
-lldp enable
-commit
-```
 
 ```
 lldp run
-int <>
+int g0/2
 lldp transmit
 lldp receive
+
+int g0/1
+lldp transmit
+lld receive
 ```
 - Verification
 ```
@@ -27,10 +24,8 @@ sh lldpstatistic detail
 1. Configure R-GW to be the [[Network Time Protocol (NTP)]] master . Configure both R1,R2 and R3 to sync their time with R-GW
 - R-GW
 ```
-feature ntp
-
 ntp master 3
-ntp source g4/0
+ntp source g0/1
 ntp logging
 ```
 
@@ -57,33 +52,42 @@ sh ntp association
 Reference :
 - [Cisco ](https://www.cisco.com/c/en/us/td/docs/switches/datacenter/nexus5500/sw/system_management/7x/b_5500_System_Mgmt_Config_7x/configuring_ntp.pdf)
 
-1. Send [[Syslog]] Information to PRTG
+2. Send [[Syslog]] Information to PRTG
 
-
-1. Configure [[Simple Network Management Protocol version 3 (SNMPv3)]] on R-GW
 ```
-snmp-server group group1 v3 auth access lmnop
+logging host 142.71.3.34
+logging trap informational
+logging on
 ```
 
+3. Configure [[Simple Network Management Protocol version 3 (SNMPv3)]] on R-GW ,R1
+
+- R-GW
+```
+int g0/0
+ip add 142.71.3.33 255.255.255.252 
+
+ip route 142.71.3.32 255.255.255.252  142.71.3.29 
+```
+
+- R-GW
 ```
 snmp-server group SNMP-GROUP v3 priv
-snmp-server user SNMP-USER SNMP-GROUP v3 auth md5 CISCO priv aes 128 CISCO
-snmp-server host <ip address> version 3 priv host-user
+snmp-server user SNMP-USER SNMP-GROUP v3 auth md5 CISCO12345 priv aes 128 CISCO12345
+snmp-server host 142.71.3.34 version 3 priv host-user
 ```
 
+- R1
 ```
-snmp-server community public RO
-snmp-server community private RW
-```
-
-```
-snmp-server engineID local <word>
+snmp-server group SNMP-GROUP v3 priv
+snmp-server user SNMP-USER SNMP-GROUP v3 auth md5 CISCO12345 priv aes 128 CISCO12345
+snmp-server host 142.71.3.34 version 3 priv host-user
 ```
 
 - Verification 
 ```
 sh snmp group
-sh snmp user [username]
+sh snmp user SNMP-USER
 sh snmp engineID
 ```
 

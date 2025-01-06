@@ -26,5 +26,17 @@ snmp-server engineID {local engine-id | remote ip-address [udp-port udp-port-num
 snmp-server user user-name group-name [remote ip-address [udp-port port]] {v1 | v2c | v3 [encrypted] [auth {md5 | sha} auth-password]} [access access-list]  
 ```
 
+
+- Community Read-Only and Read-Write
+```
+snmp-server community public RO
+snmp-server community private RW
+```
+
+- Change engineID
+```
+snmp-server engineID local <word>
+```
+
 Reference
 - [Cisco nm-snmp-snmpv3](https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/snmp/configuration/xe-3se/5700/snmp-xe-3se-5700-book/nm-snmp-snmpv3.pdf)

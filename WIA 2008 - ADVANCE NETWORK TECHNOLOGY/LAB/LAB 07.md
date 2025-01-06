@@ -108,7 +108,7 @@ no ipv6 traffic-filter INFRASTRUCTURE_R1_IPV6 in
 ip access-list extended INFRASTRUCTURE
 remark "All external traffic can only access DMZ"
 remark Deny router interface for dmz
-permit ip host 100.100.61.1 host 100.100.71.1
+permit ip host 100.100.62.1 host 100.100.71.1
 permit udp any any eq 500
 permit esp any any
 permit gre host 142.62.3.2 host 142.71.3.22
@@ -143,6 +143,8 @@ ip access-group INFRASTRUCTURE in
 ipv6 access-list INFRASTRUCTURE_IPV6
 remark All external traffic can only access DMZ
 remark Deny router interface for dmz
+permit udp any any eq 500
+permit esp any any
 deny ipv6 any 2001:142:71:14::1/128 
 permit ipv6 any 2001:142:71:14::/64
 permit icmp any any echo-reply
@@ -156,7 +158,7 @@ deny ipv6 any 2001:142:71::/48
 ```
 
 ```
-int g4/0
+int g0/2
 ipv6 traffic-filter INFRASTRUCTURE_IPV6 in
 ```
 
