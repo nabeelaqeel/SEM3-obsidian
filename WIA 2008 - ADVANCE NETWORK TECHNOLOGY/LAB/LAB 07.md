@@ -1,4 +1,4 @@
-[[LAB 07]]![Pasted image 20241203192538.png](../../images/Pasted%20image%2020241203192538.png)
+[LAB 07](LAB%2007.md)![Pasted image 20241203192538.png](../../images/Pasted%20image%2020241203192538.png)
 
 ![Pasted image 20241220101204.png](../../images/Pasted%20image%2020241220101204.png)
 
@@ -204,7 +204,7 @@ ip mtu 1400
 ip tcp adjust-mss 1360
 ```
 Reference : [Cisco Community](https://community.cisco.com/t5/networking-knowledge-base/how-to-configure-a-gre-tunnel/ta-p/3131970)
-![[../../images/Pasted image 20241221234330.png]]
+![../../images/Pasted image 20241221234330.png](../../images/Pasted%20image%2020241221234330.png)
 
 5. Create IPSEC VPN between R-GW from VLAN 103 to DMZ
 - R-GW

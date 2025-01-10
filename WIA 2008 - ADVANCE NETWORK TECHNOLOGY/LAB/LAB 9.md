@@ -1,4 +1,4 @@
-![[../../images/Pasted image 20241221185926.png]]
+![../../images/Pasted image 20241221185926.png](../../images/Pasted%20image%2020241221185926.png)
 1. Download and install VM 
 - [Github](https://github.com/mininet/openflow-tutorial/wiki/Installing-Required-Software)
 

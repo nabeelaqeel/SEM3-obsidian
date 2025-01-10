@@ -4,5 +4,5 @@
   
   
   
-  ![[../../images/Pasted image 20250109095305.png]]
-![[../../images/Pasted image 20250109095457.png]]
+  ![../../images/Pasted image 20250109095305.png](../../images/Pasted%20image%2020250109095305.png)
+![../../images/Pasted image 20250109095457.png](../../images/Pasted%20image%2020250109095457.png)

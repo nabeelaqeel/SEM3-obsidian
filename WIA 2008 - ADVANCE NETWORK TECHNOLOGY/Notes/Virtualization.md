@@ -1,12 +1,12 @@
 - no virtualization
-![[../../images/Pasted image 20241221180228.png]]
+![../../images/Pasted image 20241221180228.png](../../images/Pasted%20image%2020241221180228.png)
 - Type 1 Hypervisor
-![[../../images/Pasted image 20241221180239.png]]
+![../../images/Pasted image 20241221180239.png](../../images/Pasted%20image%2020241221180239.png)
 - Type 2 Hypervisor
-![[../../images/Pasted image 20241221180250.png]]
+![../../images/Pasted image 20241221180250.png](../../images/Pasted%20image%2020241221180250.png)
 
 - Connecting VMs to the Network 
-![[../../images/Pasted image 20241221181213.png]]
+![../../images/Pasted image 20241221181213.png](../../images/Pasted%20image%2020241221181213.png)
 
 ---
 ## Cloud
@@ -22,7 +22,7 @@
 2. Platform as a Service (PaaS)
 3. Infrastructure as a Service (IaaS)
 
-![[../../images/Pasted image 20241221203929.png]]
+![../../images/Pasted image 20241221203929.png](../../images/Pasted%20image%2020241221203929.png)
 ### 4 Deployment Model of Cloud
 - Private cloud
 - Community cloud

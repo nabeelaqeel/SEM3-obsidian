@@ -21,7 +21,7 @@ sh lldpneighbor int <>
 sh lldpstatistics int <>
 sh lldpstatistic detail
 ```
-1. Configure R-GW to be the [[Network Time Protocol (NTP)]] master . Configure both R1,R2 and R3 to sync their time with R-GW
+1. Configure R-GW to be the [Network Time Protocol (NTP)](../../Others/Network%20Time%20Protocol%20(NTP).md) master . Configure both R1,R2 and R3 to sync their time with R-GW
 - R-GW
 ```
 ntp master 3
@@ -52,7 +52,7 @@ sh ntp association
 Reference :
 - [Cisco ](https://www.cisco.com/c/en/us/td/docs/switches/datacenter/nexus5500/sw/system_management/7x/b_5500_System_Mgmt_Config_7x/configuring_ntp.pdf)
 
-2. Send [[Syslog]] Information to PRTG
+2. Send [Syslog](../../Others/Syslog.md) Information to PRTG
 
 ```
 logging host 142.71.3.34
@@ -62,7 +62,7 @@ logging on
 
 ```
 
-3. Configure [[Simple Network Management Protocol version 3 (SNMPv3)]] on R-GW ,R1
+3. Configure [Simple Network Management Protocol version 3 (SNMPv3)](../../Others/Simple%20Network%20Management%20Protocol%20version%203%20(SNMPv3).md) on R-GW ,R1
 
 - R-GW
 ```
