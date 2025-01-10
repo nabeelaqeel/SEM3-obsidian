@@ -57,7 +57,9 @@ Reference :
 ```
 logging host 142.71.3.34
 logging trap informational
+logging source lo 0
 logging on
+
 ```
 
 3. Configure [[Simple Network Management Protocol version 3 (SNMPv3)]] on R-GW ,R1
@@ -66,18 +68,34 @@ logging on
 ```
 int g0/0
 ip add 142.71.3.33 255.255.255.252 
-
-ip route 142.71.3.32 255.255.255.252  142.71.3.29 
+ 
 ```
 
-- R-GW
+```
+ip ospf 1 area 60
+int g0/0
+ip ospf network point-to-point
+ipv6 ospf network point-to-point
+ip ospf message-digest-key 1 md5 CISCO
+
+
+ipv6 unicast-routing
+int g0/1
+ipv6 ospf 1 area 60
+ipv6 ospf authentication ipsec spi 263 md5 1234567890ABCDEF1234567890ABCDEF
+
+ipv6 router ospf 1
+default-information originate always
+```
+
+- R-GW 
 ```
 snmp-server group SNMP-GROUP v3 priv
 snmp-server user SNMP-USER SNMP-GROUP v3 auth md5 CISCO12345 priv aes 128 CISCO12345
 snmp-server host 142.71.3.34 version 3 priv host-user
 ```
 
-- R1
+- R2
 ```
 snmp-server group SNMP-GROUP v3 priv
 snmp-server user SNMP-USER SNMP-GROUP v3 auth md5 CISCO12345 priv aes 128 CISCO12345

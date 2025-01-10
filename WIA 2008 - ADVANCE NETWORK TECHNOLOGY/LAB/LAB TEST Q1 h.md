@@ -1,3 +1,5 @@
+![[../../images/Pasted image 20250110092439.png]]
+
 ![Pasted image 20241215220457.png](../../images/Pasted%20image%2020241215220457.png)
 
 ```
@@ -49,6 +51,12 @@ ip add 133.71.2.1 255.255.255.255
 ipv6 add 2001:133:71:100::1/128
 ```
 
+```
+int lo 1
+ip add 133.71.99.99 255.255.255.255
+ipv6 add 2001:133:71:99::99/128
+```
+
 - R2 
 ```
 int lo 0 
@@ -94,6 +102,7 @@ ip routing
 ```
 router ospf 1
 network 133.71.2.1 255.255.255.255 area 0
+network 133.71.99.99 255.255.255.255 area 0
 ```
 
 - R2 
@@ -108,7 +117,7 @@ default-information originate always
 ```
 ipv6 unicast-routing
 
-int range g1/0 , lo 0
+int range g1/0 , lo 0 , lo 1
 ipv6 ospf 1 area 0
 ipv6 ospf network point-to-point
 
@@ -150,16 +159,8 @@ ipv6 route 2001:133:71:2::/64 2001:133:71:2::2
 ```
 - R1
 ```
-no ip route 133.71.1.0 255.255.255.252 133.71.1.5
-no ipv6 route 2001:133:71:1::/64 2001:133:71:2::1
-
-no ip route 133.71.2.1 255.255.255.255 133.71.1.5
-no ipv6 route 2001:133:71:100::1/128 2001:133:71:2::1
-
 ip route 133.71.0.0 255.255.0.0 133.71.1.5
 ipv6 route 2001:101:100:133::71/64 2001:133:71:2::1
-
-
 ```
 - R2
 ```
@@ -201,28 +202,6 @@ ipv6 route 2001:133:71::/48 null 0
 ```
 
 ```
-router bgp 17
-bgp router-id 1.1.1.1
-neighbor 101.100.133.95 remote-as 15
-network 133.71.0.0 mask 255.255.0.0 
-
-
-no ip route 133.71.0.0 255.255.0.0 null0
-no ipv6 route 2001:133:71::/48 null 0
-```
-
-```
-
-ipv6 unicast-routing
-router bgp 17
-
-bgp log-neighbor-changes
-address-family ipv6
-neighbor 2001:101:100:133::70 remote-as 18
-network 2001:133:71::/48
-```
-
-```
 ipv6 unicast-routing
 router bgp 17
 
@@ -233,38 +212,47 @@ neighbor 2001:101:100:133::70 activate
 network 2001:133:71::/48
 ```
 
+
+---
+## Configuration on R1 (Physical)
+
 ```
+int lo 0 
+ip add 133.71.2.3 255.255.255.255
+ipv6 add 2001:133:71:100::3/128
+
+int g0/1
+ip add 133.71.1.6 255.255.255.252
+ipv6 add 2001:133:71:2::2/64
+no shut
+
+int g0/2
+ip add  101.100.133.71 255.255.255.0
+ipv6 add 2001:101:100:133::71/64
+no shut
+
+router bgp 171
+bgp router-id 1.1.1.1
+neighbor 101.100.133.62 remote-as 162
+network 133.71.0.0 mask 255.255.0.0 
+
 ipv6 unicast-routing
-router bgp 17
+router bgp 171
 
 bgp log-neighbor-changes
-neighbor 2001:101:100:133::95 remote-as 15
+neighbor 2001:101:100:133::62 remote-as 162
 address-family ipv6
-neighbor 2001:101:100:133::95 activate
+neighbor 2001:101:100:133::62 activate
 network 2001:133:71::/48
 
-```
-- R1H2
-```
-router bgp 18
-bgp router-id 2.2.2.2
-neighbor 101.100.133.71 remote-as 17
-network 133.70.0.0 mask 255.255.0.0 
+ip route 133.71.0.0 255.255.0.0 133.71.1.5
+ipv6 route 2001:133:71::/48 2001:133:71:2::1
 
-ip route 133.70.0.0 255.255.0.0 null0
-ipv6 route 2001:133:70::/48 null 0
+	
 ```
 
-```
+---
 
-ipv6 unicast-routing
-router bgp 18
-
-bgp log-neighbor-changes
-address-family ipv6
-neighbor 2001:101:100:133::71 remote-as 17
-network 2001:133:70::/48
-```
 1. Other network 
 - R3H2
 ```
@@ -352,4 +340,25 @@ no shut
 
 ip route 133.70.1.0 255.255.255.252 133.70.1.5
 ipv6 route 2001:133:70:1::/64 2001:133:70:2::1
+```
+
+- R1H2
+```
+router bgp 18
+bgp router-id 2.2.2.2
+neighbor 101.100.133.71 remote-as 17
+network 133.70.0.0 mask 255.255.0.0 
+
+ip route 133.70.0.0 255.255.0.0 null0
+ipv6 route 2001:133:70::/48 null 0
+```
+
+```
+ipv6 unicast-routing
+router bgp 18
+
+bgp log-neighbor-changes
+address-family ipv6
+neighbor 2001:101:100:133::71 remote-as 17
+network 2001:133:70::/48
 ```

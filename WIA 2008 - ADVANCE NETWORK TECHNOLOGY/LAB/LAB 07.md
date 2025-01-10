@@ -105,7 +105,7 @@ no ipv6 traffic-filter INFRASTRUCTURE_R1_IPV6 in
 ```
 - R-GW
 ```
-ip access-list extended INFRASTRUCTURE
+no ip access-list extended INFRASTRUCTURE
 remark "All external traffic can only access DMZ"
 remark Deny router interface for dmz
 permit ip host 100.100.62.1 host 100.100.71.1

@@ -3,7 +3,7 @@
 1. DHCP for NET105 (private ip)
 - R3
 ```
-ip dhcp excluded-address 192.168.0.1 192.168.0.10
+ip dhcp excluded-address 192.168.71.1 192.168.71.10
 ip dhcp excluded-address 192.168.100.1 192.168.100.2
 
 ip dhcp pool DHCP_NET105
@@ -59,7 +59,7 @@ source-ipv6-address} [port-number] {destination-ipv6-prefix/prefix-length
 
 - R3
 ```
-ip access-list extended NET105
+no ip access-list extended NET105
 remark "NET 105 should only be able to access DMZ and internet"
 permit ip 192.168.0.0 0.0.0.127 142.71.5.0 0.0.0.63
 deny ip 192.168.0.0 0.0.0.127 142.71.0.0 0.0.255.255
