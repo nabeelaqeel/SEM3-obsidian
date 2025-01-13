@@ -227,12 +227,6 @@ match address R-GW_IPSEC
 
 ```
 ip access-list extended R-GW_IPSEC
-permit ip 142.71.0.0 0.0.255.255 142.62.0.0 0.0.255.255
-permit ip 142.62.0.0 0.0.255.255 142.71.0.0 0.0.255.255
-```
-
-```
-ip access-list extended R-GW_IPSEC
 permit ip 142.71.0.0 0.0.1.255 142.62.5.0 0.0.0.63
 permit ip 142.71.5.0 0.0.0.63 142.62.0.0 0.0.1.255
 ```
@@ -240,10 +234,6 @@ permit ip 142.71.5.0 0.0.0.63 142.62.0.0 0.0.1.255
 ```
 int g0/2
 crypto map CRYPTOMAP
-```
-
-```
-no ip route 142.62.0.0 255.255.0.0 100.100.62.1
 ```
 
 ```
@@ -293,6 +283,8 @@ sh crypto ipsec sa int g0/2
 sh crypto map
 sh crypto session
 sh crypto session remote 100.100.62.1 detail
+show crypto isakmp policy
+show crypto ipsec transform-set
 ```
 
 > - Make sure the time is consistent across devices
@@ -306,7 +298,7 @@ Reference :
 - [Cisco Configuring IPSec PDF](https://www.cisco.com/c/en/us/td/docs/routers/interface-module-lorawan/software/configuration/guide/b_lora_scg/iipsec.pdf)
 - [Cisco](https://www.cisco.com/en/US/docs/routers/access/800/850/software/configuration/guide/vpngre.html)
 
-
+---
 ## Change NET105
 
 NET 105

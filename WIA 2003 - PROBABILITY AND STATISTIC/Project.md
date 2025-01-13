@@ -21,3 +21,9 @@ major public health problem
 - Gothankar J. S. (2013). Tuberculosis awareness program and associated changes in knowledge levels of school students. _International journal of preventive medicine_, _4_(2), 153–157.
 [Malaysia Tuberculosis Country Profile](https://www.aidsdatahub.org/sites/default/files/resource/malaysia-tb-profile-2022.pdf)
 - (2022).*Tuberculosis prole: Malaysia*.Retrieves from https://www.aidsdatahub.org/sites/default/files/resource/malaysia-tb-profile-2022.pdf
+
+https://www.sciencedirect.com/science/article/abs/pii/S1130862119302475
+
+https://www.elsevier.es/en-revista-enfermeria-clinica-35-articulo-knowledge-awareness-perception-towards-tuberculosis-S1130862119302475
+
+file:///C:/Users/User/Downloads/mscano,+jidc-015-1205.pdf

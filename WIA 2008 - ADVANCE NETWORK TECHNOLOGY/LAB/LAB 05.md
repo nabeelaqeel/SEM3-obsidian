@@ -51,10 +51,15 @@ ip ssh version 2
 ip access-list standard SSH_ACCESS
 permit 142.71.2.128 0.0.0.127
 line vty 0 4
+privilege level 15
 access-class SSH_ACCESS in
 transport input ssh
-
 ```
+
+> privilege level 15 : make you pass to EXEC 
+> if you dont configure it . you have to enable password yourpassword
+
+
 - Verification
 ```
 sh crypto key mypubkey rsa
@@ -78,6 +83,11 @@ no ip routing
 ssh -l cisco 150.100.4.1 
 cisco
 ```
+
+```
+ssh -v 2 -l cisco 150.100.4.1
+```
+
 > R5 is used to test ssh to R4 
 
 

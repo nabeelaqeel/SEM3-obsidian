@@ -31,7 +31,7 @@ ntp logging
 
 - R2
 ```
-ntp server 142.71.3.30
+ntp server pp142.71.3.30
 ntp source g4/0
 ```
 
