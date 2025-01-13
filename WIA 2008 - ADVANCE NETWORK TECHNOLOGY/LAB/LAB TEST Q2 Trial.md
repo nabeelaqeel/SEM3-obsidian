@@ -1,4 +1,4 @@
-
+![](../../images/Pasted%20image%2020250114000527.png)
 ## VPN 
 
 IPV4
@@ -120,6 +120,7 @@ permit ip 2001:133:71::/48 2001:133:70::/48
 permit ip 2001:133:70::/48 2001:133:71::/48
 ```
 
+
 ---
 
 ## SSHv2
@@ -235,3 +236,120 @@ logging trap informational
 logging source lo 0
 logging on
 ```
+
+---
+
+## PAST YEAR
+
+![](../../images/Pasted%20image%2020250113221015.png)
+
+### NETWORK
+
+```
+R1 - DSW1   : 133.71.1.8
+R1 - DSW2   : 133.71.1.12
+
+R1 - DSW1   : 2001:133:71:3::/64
+R1 - DSW2   : 2001:133:71:4::/64
+
+lo 0 
+DSW1 : 133.71.2.4 
+DSW2 : 133.71.2.5
+
+ipv6
+DSW1 : 2001:133:71:100::4/128
+DSW2 : 2001:133:71:100::5/128
+```
+
+R1
+```
+int g4/0
+ip add 133.71.1.9 255.255.255.252 
+ipv6 add 2001:133:71:3::1/64
+
+int g5/0
+ip add 133.71.1.13 255.255.255.252 
+ipv6 add 2001:133:71:4::1/64
+```
+
+DSW1
+```
+int f0/0
+ip add 133.71.1.10 255.255.255.252 
+ipv6 add 2001:133:71:3::2/64
+
+int lo 0
+ip add 133.71.2.4 255.255.255.255
+ipv6 add 2001:133:71:100::4/128
+```
+
+DSW2
+```
+int f0/0 
+ip add 133.71.1.14 255.255.255.252 
+ipv6 add 2001:133:71:4::2/64
+
+int lo 0
+ip add 133.71.2.5 255.255.255.255
+ipv6 add 2001:133:71:100::5/128
+```
+
+### EtherChannel
+```
+int port 1
+int range f3/0 , f3/1
+sh
+no shut
+channel-group 1 mode on
+```
+
+### OSPF Area 0
+
+R1
+```
+router ospf 1
+network 133.71.2.3 0.0.0.0 area 0
+network 133.71.1.8 0.0.0.3 area 0
+network 133.71.1.12 0.0.0.3 area 0
+
+int range g4/0 , g5/0
+ip ospf network point-to-point
+
+int range g4/0 , g5/0
+ipv6 ospf 1 area 0
+```
+
+DSW1
+```
+ip routing
+ipv6 unicast-routing
+
+router ospf 1
+network 133.71.2.4 0.0.0.0 area 0
+network 133.71.1.8 0.0.0.3 area 0
+
+int range f0/0 
+ip ospf network point-to-point
+
+int range f0/0
+ipv6 enable
+ipv6 ospf 1 area 0
+```
+
+DSW2
+```
+ip routing
+ipv6 unicast-routing
+
+router ospf 1
+network 133.71.2.5 0.0.0.0 area 0
+network 133.71.1.12 0.0.0.3 area 0
+
+int range f0/0
+ip ospf network point-to-point
+
+int range f0/0
+ipv6 enable
+ipv6 ospf 1 area 0
+```
+

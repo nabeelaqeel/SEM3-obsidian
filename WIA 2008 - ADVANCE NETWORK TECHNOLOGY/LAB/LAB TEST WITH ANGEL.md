@@ -1,4 +1,4 @@
-VPN 
+## VPN 
 
 IPV4
 
@@ -23,6 +23,7 @@ match address R1_IPSEC
 ```
 ip access-list extended R1_IPSEC
 permit ip 133.71.0.0 0.0.255.255 133.62.0.0 0.0.255.255
+permit ip 133.62.0.0 0.0.255.255 133.71.0.0 0.0.255.255
 ```
 
 ```
@@ -59,8 +60,40 @@ ipv6 crypto map IPV6-CM
 ```
 ipv6 access-list R1_IPV6
 permit ip 2001:133:71::/48 2001:133:62::/48
+permit ip 2001:133:62::/48 2001:133:71::/48
 ```
 
 
 ---
 
+## BGP
+
+```
+router bgp 171
+network 101.100.133.0 mask 255.255.255.0 
+```
+
+```
+router bgp 171
+
+bgp log-neighbor-changes
+address-family ipv6
+network 2001:101:100:133::/64
+```
+
+---
+
+## GRE
+
+```
+int tunnel 1
+ip add 172.16.1.1 255.255.255.252
+tunnel source 133.71.1.5
+tunnel destination 133.62.1.2
+```
+
+```
+ip route 133.62.99.99 255.255.255.255 172.16.1.2
+```
+
+---
