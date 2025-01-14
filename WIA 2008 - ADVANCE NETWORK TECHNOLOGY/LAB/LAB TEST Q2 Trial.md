@@ -186,8 +186,42 @@ no shut
 
 ---
 
-## NAT
+## PAT
 
+```
+PUBLIC : 133.71.4.0   / 30
+NET104 : 192.168.71.0 / 24
+```
+PC3
+```
+ip 192.168.71.3 255.255.255.0 192.168.71.1
+```
+R3
+```
+int g2/0
+ip add 192.168.71.1 255.255.255.0 
+ip nat inside
+
+int g1/0
+ip nat outside
+
+ip nat pool pool1 133.71.4.1 133.71.4.1 prefix 30
+ip nat pool pool2 133.71.4.2 133.71.4.2 prefix 30
+
+access-list 1 permit 192.168.71.0 0.0.0.127
+access-list 2 permit 192.168.71.0 0.0.0.127
+
+ip nat inside source list 1 pool pool1 overload
+ip nat inside source list 2 pool pool2 overload
+
+int lo 2
+ip add 133.71.4.1 255.255.255.252 
+```
+
+```
+router ospf 1
+no network 133.71.4.0 0.0.0.3 area 0
+```
 ---
 
 ## NTP
