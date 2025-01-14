@@ -220,7 +220,14 @@ ip add 133.71.4.1 255.255.255.252
 
 ```
 router ospf 1
-no network 133.71.4.0 0.0.0.3 area 0
+network 133.71.4.0 0.0.0.3 area 0
+```
+
+  IF you want other can ping your private also 
+  
+```
+router ospf 1
+network 192.168.71.0 0.0.0.255 area 0
 ```
 ---
 
@@ -248,7 +255,7 @@ ip 133.71.3.2 255.255.255.252 133.71.3.1
 
 R1
 ```
-int f0/0
+int g0/0
 ip add 133.71.3.1 255.255.255.252
 ```
 

@@ -247,13 +247,10 @@ network 2001:133:71::/48
 
 ip route 133.71.0.0 255.255.0.0 133.71.1.5
 ipv6 route 2001:133:71::/48 2001:133:71:2::1
-
-	
 ```
 
 ---
-
-1. Other network 
+## Other network 
 - R3H2
 ```
 int lo 0 
