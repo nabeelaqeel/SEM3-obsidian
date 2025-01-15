@@ -80,7 +80,8 @@ topos = { 'mytopo': ( lambda: MyTopo() ) }
 ```
 
 
-- lab9.py
+<details>
+<summary>lab9.py</summary>
 ```python
 from pox.core import core
 
@@ -643,7 +644,7 @@ def launch():
     core.openflow.addListenerByName("PacketIn", _PacketIn)
 ```
 
-
+</details>
 
 
 
@@ -654,6 +655,8 @@ def launch():
 ## My Reference
 
 - [Medium](https://medium.com/@deelaka.perera/simple-network-topology-using-mininet-and-installing-flow-rules-directly-on-controller-3ec61ca2b962)
+- [Pox](https://noxrepo.github.io/pox-doc/html/#forwarding-hub)
+
 
 <details>
 <summary>Python Code</summary>
