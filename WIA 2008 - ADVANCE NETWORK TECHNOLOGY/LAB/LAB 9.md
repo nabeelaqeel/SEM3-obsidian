@@ -80,8 +80,7 @@ topos = { 'mytopo': ( lambda: MyTopo() ) }
 ```
 
 
-<details>
-<summary>lab9.py</summary>
+- lab9.py
 ```python
 from pox.core import core
 
@@ -643,11 +642,6 @@ def launch():
 
     core.openflow.addListenerByName("PacketIn", _PacketIn)
 ```
-</details>
-
-
-
-
 
 
 ---
