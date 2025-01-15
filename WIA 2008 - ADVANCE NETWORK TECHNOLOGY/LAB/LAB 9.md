@@ -28,7 +28,7 @@ cd pox
 
 - Verification on switch
 ```
-	sudo ovs-ofctl dump-flows s2
+sudo ovs-ofctl dump-flows s2
 sudo ovs-ofctl dump-flows s4
 ```
 ----
@@ -653,6 +653,11 @@ def launch():
 ---
 ## My Reference
 
+- [Medium](https://medium.com/@deelaka.perera/simple-network-topology-using-mininet-and-installing-flow-rules-directly-on-controller-3ec61ca2b962)
+
+<details>
+<summary>Python Code</summary>
+
 - How to create custom topology
 ```python
 """Custom topology example
@@ -832,3 +837,5 @@ def launch():
     core.openflow.addListenerByName("PacketIn", _PacketIn)
 
 ```
+
+</details>
