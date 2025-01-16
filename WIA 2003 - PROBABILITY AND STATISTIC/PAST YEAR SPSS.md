@@ -84,7 +84,7 @@ In a paired t-test, the **degrees of freedom (df)** represent the number of pair
 
 ### (c) (ii)
 
-The paired t-test gives a p-value  < 0.000, which is less than the significance level (α=0.05\alpha = 0.05).
+The paired t-test gives a p-value  < 0.000, which is less than the significance level (α=0.05).
 
 ### (c) (iii)
 
