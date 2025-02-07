@@ -9,9 +9,59 @@
 
 ## Q3
 ![](../images/Pasted%20image%2020250207115849.png)
+Business rules
+1. `Product` are made up of many `components`
+2. Each `component` can be supplied by one or more `supplier`
+3. a `supplier` can exist without providing `component` ; hmm
+4. a `component` does not have to be associated with a `supplier` : optional 
+5. a `component` does not have to be associated with a `product` . Not all component are used in product : optional
+6. a `product` cannot exist without a `component`  : mandatory
+
+```mermaid
+
+erDiagram
+    p[Product] {
+        string productID PK
+        string productName
+        int quantityOnHand
+    }
+    s[Supplier] {
+        string supplierID PK
+    }
+    c[Component]{
+	    string compenentID PK
+	    string supplierID FK
+	    string productID FK
+	    string name
+	    string description
+	    
+    }
+    p |o--|{ c : "made up" 
+    c |o--o{ s : suppply
+```
+
 
 ## Q4
 ![](../images/Pasted%20image%2020250207115918.png)
+Primary Key (Given)
+- InvNo
+- MedID
+
+Partial Dependencies 
+- InvNo --> InvDate , PatID 
+- MedID --> MedName , Desc, Type, Price
+
+Transitive Dependencies
+- PatID --> PatName,PatAdd
+
+1NF
+
+Invitation
+
+| InvNo | InvDate | PatID |
+| ----- | ------- | ----- |
+
+
 
 ## Q5
 ![](../images/Pasted%20image%2020250207115946.png)
