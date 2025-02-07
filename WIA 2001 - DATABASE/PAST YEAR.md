@@ -94,19 +94,47 @@ Invitation
 ### Q5 (a)
 ![](../images/Pasted%20image%2020250207120042.png)
 
+| Iron            |
+| --------------- |
+| HomeGym         |
+| Microwave Oven  |
+| Cordless Drill  |
+| Washing Machine |
+| Stand Mixer     |
+| Dishwasher      |
+
 ### Q5 (b)
 ![](../images/Pasted%20image%2020250207120118.png)
+```sql
+UPDATE  CUSTOMER 
+SET Street = '90A , Jln Kita 2'
+WHERE CustNo = 524 ;
+```
 
 ### Q5 (c)
 ![](../images/Pasted%20image%2020250207120136.png)
-
+```sql
+SELECT CustNo , CustName , (CreditLimit - Balance) AS AvaiCre
+FROM CUSTOMER 
+WHERE CreditLimit > Balance;
+```
 ### Q5 (d)
 ![](../images/Pasted%20image%2020250207120202.png)
-
+```sql
+SELECT CUSTOMER.CustNo , CUSTOMER.CustName , AGENT.AgentNo , AGENT.FirstName , AGENT.LastName
+FROM CUSTOMER 
+LEFT JOIN AGENT ON CUSTOMER.AgentNo = AGENT.AgentNo
+ORDER BY CustNo;
+```
 ### Q5 (e)
 ![](../images/Pasted%20image%2020250207120226.png)
 ![](../images/Pasted%20image%2020250207120237.png)
-
+```sql
+SELECT AgentNo , Count(CustNo) AS NoOfCust , ROUND(Avg(Balance),2) AS AverageBal
+FROM CUSTOMER
+GROUP BY AgentNo
+ORDER BY AgentNo ASC; 
+```
 
 ---
 
