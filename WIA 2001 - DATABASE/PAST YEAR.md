@@ -195,6 +195,29 @@ erDiagram
 ![](../images/Pasted%20image%2020250207120601.png)
 ![](../images/Pasted%20image%2020250207120615.png)
 
+primary key : InvoiceNum
+
+Partial Dependency
+- CustomerNum --> CustLastName , CustFirstName , Street , City 
+- ItemNum --> ItemDesc, Price , QtyShipped
+
+Transitive Dependency 
+- City --> Zip , State
+3NF
+Invoice
+
+| InvoiceNum | CustNum | ItemNum | Date |
+| ---------- | ------- | ------- | ---- |
+
+Customer
+
+| CustNum | CustLastName | CustFirstName | Street | City |
+| ------- | ------------ | ------------- | ------ | ---- |
+
+City
+
+| City | ZIP | State |
+| ---- | --- | ----- |
 ## Q5
 ![](../images/Pasted%20image%2020250207120644.png)
 ![](../images/Pasted%20image%2020250207120702.png)
