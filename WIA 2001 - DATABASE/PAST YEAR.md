@@ -150,6 +150,46 @@ ORDER BY AgentNo ASC;
 ![](../images/Pasted%20image%2020250207120512.png)
 ![](../images/Pasted%20image%2020250207120533.png)
 
+```mermaid
+erDiagram
+    h[Hotel] {
+        string Hotel_ID PK
+        string HotelName
+        string ResortName
+    }
+    a[Accomodation] {
+        string AccCode PK
+        string Catering
+        string BedType
+    }
+    c[Customer]{
+	    string Customer_ID PK
+	    string PhoneNum 
+    }
+    r[Reservation]{
+	    string ReservationNo PK
+	    string Customer_ID FK
+	    string Hotel_ID FK
+	    string AccCode FK
+	    string ReservationDate
+    }
+    ha[Hotel_Accomodation]{
+	    string Hotel_ID FK
+	    string AccCode FK
+	    float Price 
+	    string Month
+    }
+    
+
+	r o{--|| a : have
+	r o{--|| h : have
+	c ||--o{ r : make
+	h ||--o{ ha : have
+	a ||--o{ ha : have
+
+```
+
+
 
 ## Q4
 ![](../images/Pasted%20image%2020250207120601.png)
