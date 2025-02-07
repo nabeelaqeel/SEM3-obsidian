@@ -56,12 +56,36 @@ Transitive Dependencies
 
 1NF
 
+| InvNo | InvDate | PatID | PatName | PatAdd | MedID | MedName | Desc | Type | Price |     |
+| ----- | ------- | ----- | ------- | ------ | ----- | ------- | ---- | ---- | ----- | --- |
+
+2NF
+
+Invitation
+
+| InvNo | InvDate | PatID | PatName | PatAdd |
+| ----- | ------- | ----- | ------- | ------ |
+Medication
+
+| MedID | MedName | Desc | Type | Price |
+| ----- | ------- | ---- | ---- | ----- |
+
+3NF
+
 Invitation
 
 | InvNo | InvDate | PatID |
 | ----- | ------- | ----- |
+ Medication
+ 
+| MedID | MedName | Desc | Type | Price |
+| ----- | ------- | ---- | ---- | ----- |
+ Patient
 
-
+| PatID | PatName | PatAdd |
+| ----- | ------- | ------ |
+ 
+ 
 
 ## Q5
 ![](../images/Pasted%20image%2020250207115946.png)
