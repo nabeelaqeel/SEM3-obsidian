@@ -195,7 +195,7 @@ erDiagram
 ![](../images/Pasted%20image%2020250207120601.png)
 ![](../images/Pasted%20image%2020250207120615.png)
 
-primary key : InvoiceNum
+primary key : InvoiceNum , ItemNum
 
 Partial Dependency
 - CustomerNum --> CustLastName , CustFirstName , Street , City 
@@ -203,21 +203,30 @@ Partial Dependency
 
 Transitive Dependency 
 - City --> Zip , State
+
 3NF
 Invoice
 
-| InvoiceNum | CustNum | ItemNum | Date |
-| ---------- | ------- | ------- | ---- |
+| InvoiceNum (PK) | CustNum (FK) | Date |
+| --------------- | ------------ | ---- |
 
+Invoice_Item
+
+| InvoiceNum (PK,FK) | ItemNum (PK,FK) | QtyShipped |
+| ------------------ | --------------- | ---------- |
 Customer
 
-| CustNum | CustLastName | CustFirstName | Street | City |
-| ------- | ------------ | ------------- | ------ | ---- |
+| CustNum (PK) | CustLastName | CustFirstName | Street | City |
+| ------------ | ------------ | ------------- | ------ | ---- |
 
 City
 
-| City | ZIP | State |
-| ---- | --- | ----- |
+| City (PK) | ZIP | State |
+| --------- | --- | ----- |
+
+> WHY HAS TO CREATE INVOICE_ITEM ?
+> - because Item and Invoice is in many to many relationship
+
 ## Q5
 ![](../images/Pasted%20image%2020250207120644.png)
 ![](../images/Pasted%20image%2020250207120702.png)
