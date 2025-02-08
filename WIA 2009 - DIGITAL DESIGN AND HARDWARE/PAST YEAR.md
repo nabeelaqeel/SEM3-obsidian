@@ -889,3 +889,22 @@ end process;
 end architecture;
 
 ```
+
+---
+
+## 2016/2017 SEM2
+
+## Q1
+![](../images/Pasted%20image%2020250208041144.png)
+![](../images/Pasted%20image%2020250208123727.png)
+![](../images/Pasted%20image%2020250208123740.png)
+![](../images/Pasted%20image%2020250208123826.png)
+![](../images/Pasted%20image%2020250208123840.png)
+![](../images/Pasted%20image%2020250208123852.png)
+![](../images/Pasted%20image%2020250208123901.png)
+
+## Q2
+![](../images/Pasted%20image%2020250208123915.png)
+
+## Q3
+![](../images/Pasted%20image%2020250208123927.png)
