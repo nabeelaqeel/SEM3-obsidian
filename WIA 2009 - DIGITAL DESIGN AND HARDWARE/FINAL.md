@@ -58,6 +58,16 @@ end process;
 
 ## Q4
 
+```vhdl
+IF rising_edge(Clock) THEN 
+		IF Resetn = '0' THEN 
+			Q <= '0' ; 
+		ELSE
+			Q <= D ; 
+		END IF ; 
+END IF;
+```
+
 ## Q6
 
 ```vhdl

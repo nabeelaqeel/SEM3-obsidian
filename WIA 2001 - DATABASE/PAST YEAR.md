@@ -292,7 +292,7 @@ Three Techniques to Control Deadlock
 1. **Deadlock Prevention:**
     - Modify the system's resource allocation rules to prevent deadlocks from occurring.
     - Techniques:
-        - **Mutual Exclusion:** Avoid non-sharable resources unless necessary.
+        - **Mutual Exclusion:** Avoid `non-sharable` resources unless necessary.
         - **Hold and Wait:** Require processes to request all resources at once, avoiding partial allocation.
         - **No Preemption:** Allow resources to be forcibly taken from a process if needed to avoid deadlock.
         - **Circular Wait:** Impose an ordering on resource requests to avoid circular dependencies.
@@ -301,6 +301,7 @@ Three Techniques to Control Deadlock
     - Dynamically analyze resource allocation and process states to ensure the system never enters a deadlock state.
     - Example:
         - **Banker's Algorithm:** Simulates resource allocation to check if the system remains in a safe state before granting resources.
+
 3. **Deadlock Detection and Recovery:**
     
     - Allow deadlocks to occur but detect them when they happen and recover.
@@ -316,13 +317,13 @@ Concurrency control ensures that database transactions are executed safely and c
 
  **Importance of Concurrency Control:**
 
-1.  **Data Consistency:**
+4.  **Data Consistency:**
     
     - Ensures the database remains in a consistent state even when multiple transactions are executed concurrently.
-2. **Avoidance of Conflicts:**
+5. **Avoidance of Conflicts:**
     
     - Prevents conflicts such as lost updates, dirty reads, or uncommitted data from affecting the database.
-3. **System Performance:**
+6. **System Performance:**
     
     - Enables simultaneous access to the database, improving throughput and response times for users.
 
@@ -368,13 +369,13 @@ erDiagram
 ![](../images/Pasted%20image%2020250207121313.png)
 ![](../images/Pasted%20image%2020250207121322.png)
 ![](../images/Pasted%20image%2020250207121333.png)
-1. **Insertion Anomaly**:
+7. **Insertion Anomaly**:
     
     - If a new dentist is added but has no patient appointments yet, there is no way to insert the dentist's information without leaving the patient-related fields (e.g., `No. Pesakit`, `Nama Pesakit`, etc.) blank, which violates database integrity.
-2. **Deletion Anomaly**:
+8. **Deletion Anomaly**:
     
     - If `Che Putih (P100)` cancels their appointment, the record for `Ahmad Albab (S1011)` might be deleted entirely, resulting in the loss of information about the dentist and their association with `Bilik Surgeri S15`.
-3. **Update Anomaly**:
+9. **Update Anomaly**:
     
     - If `Ahmad Albab` is assigned a different `Bilik Surgeri`, all rows referencing `S1011` need to be updated. If one record is missed, inconsistencies will arise in the data.
 
@@ -396,15 +397,15 @@ APPOINTMENT(`AppointID` , No. Staf , No. Pesakit , Tarikh , Masa , Bilik Surgeri
 ![](../images/Pasted%20image%2020250207121353.png)
 The `SELECT` statement in SQL is used to query data from a database. Here’s an explanation of the functions of the clauses mentioned and any restrictions that may apply:
 
-4. **FROM**: 
+10. **FROM**: 
    - **Function**: The `FROM` clause specifies the table or tables from which to retrieve the data. It is a mandatory clause in a `SELECT` statement unless you are selecting from a dummy table (like `DUAL` in some databases) or using a `SELECT` statement without a table reference (e.g., `SELECT 1;`).
    - **Restrictions**: The table(s) specified must exist in the database. If joining multiple tables, you must ensure that the join conditions are correctly specified to avoid Cartesian products.
 
-5. **WHERE**:
+11. **WHERE**:
    - **Function**: The `WHERE` clause is used to filter records based on specified conditions. It allows you to select only those rows that satisfy the given criteria.
    - **Restrictions**: The conditions in the `WHERE` clause must be valid expressions that can be evaluated to true or false. You cannot use aggregate functions directly in the `WHERE` clause; for that, you would use the `HAVING` clause.
 
-6. **GROUP BY**:
+12. **GROUP BY**:
    - **Function**: The `GROUP BY` clause groups rows that have the same values in specified columns into aggregated data. It is often used with aggregate functions like `COUNT`, `SUM`, `AVG`, etc., to perform calculations on each group of rows.
    - **Restrictions**: When using `GROUP BY`, all columns in the `SELECT` list that are not aggregated must be included in the `GROUP BY` clause. This ensures that the grouping is unambiguous.
 
