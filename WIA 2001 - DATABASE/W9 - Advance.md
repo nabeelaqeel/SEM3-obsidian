@@ -1,3 +1,4 @@
+
 # Advanced Structured Query Language
 
 ### SQL Join Operators
