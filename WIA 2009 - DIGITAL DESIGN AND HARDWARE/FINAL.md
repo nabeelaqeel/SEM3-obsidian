@@ -1,5 +1,7 @@
 # TOPIC 
 
+![](../images/Pasted%20image%2020250209203934.png)
+
 1. entity & architecture (body free marks) – difference between in testbench and in design (entity) Or difference between in testbench and in design (architecture) port in entity / type of data in entity / give entity then translate to
 2. combinational circuit – behaviour design style 
 	1. use loop, if-else, case, when-else
@@ -9,6 +11,94 @@
 6. FSM (state diagram)
 7. Subprogram (give any sequential circuit) use function or procedure to design 
 8. variable vs signal – last lecture (from source code) where and when u use variable and signal
+
+# NOTES
+
+## Q2
+
+Loop
+```vhdl
+for i in 1 to 3 loop
+	if x(i) = '1' then 
+		tmp := tmp + 1;
+	end if;
+end loop;
+```
+When else
+```vhdl
+y <= "10" when x = "10" else 
+	 "11" when x = "11" else
+	 "00";
+```
+With select when
+```vhdl
+with s select 
+	y <= "00" when "00",
+	     "01" when "10",
+	     "11" when others;
+```
+For generate
+```vhdl
+label : for i in 1 to 3 generate
+	-- statement
+end generate;
+```
+Case
+```vhdl
+process(a,b,s)
+begin
+	case s is 
+		when '0' => 
+			c <= a;
+		when '1' =>
+			c <= b;
+	end case;
+end process;
+```
+
+## Q4
+
+## Q6
+
+```vhdl
+architecture behavior of q8 is 
+
+    type state is (a,b,c,d);
+    signal Mealy_state : state;
+```
+## Q7
+
+### Function
+```vhdl
+function nand(signal a , b : in std_logic) return std_logic is
+begin
+	return (a nand b);
+end;
+```
+
+### Procedure
+```vhdl
+procedure nand(signal a , b : in std_logic ; c : out std_logic) is
+begin
+	c <= (a nand b);
+end;
+```
+
+## Q8
+
+### Variable
+- can only be declared under `process`
+- represented the desired behavior , not structure of the circuit
+
+```
+process(x)
+	variable tmp : integer;
+begin
+	tmp := 0;
+end 
+```
+### Signal
+- 
 
 ---
 
