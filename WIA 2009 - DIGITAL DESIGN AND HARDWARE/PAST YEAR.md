@@ -892,19 +892,196 @@ end architecture;
 
 ---
 
-## 2016/2017 SEM2
+# 2016/2017 SEM2
 
 ## Q1
 ![](../images/Pasted%20image%2020250208041144.png)
+```vhdl
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity decode2to4 is
+port (
+	en : in std_logic;
+	w : in std_logic_vector(1 downto 0);
+	y : out std_logic_vector(3 downto 0)
+);
+end entity;
+
+architecture behavior of decode2to4 is
+begin
+
+y(0) <= (not w(0)) and (not w(1)) and en;
+y(1) <= w(0) and (not w(1)) and en;
+y(2) <= (not w(0)) and w(1) and en;
+y(3) <= w(0) and w(1) and en;
+
+end arhictecture;
+```
 ![](../images/Pasted%20image%2020250208123727.png)
+```vhdl
+library ieee;
+use ieee.std_logic_1164.all
+
+entity decode2to4IF is
+port(
+	en : in std_logic;
+	w : in std_logic_vector(1 downto 0);
+	y : out std_logic_vector(3 downto 0)
+);
+
+architecture behavior of decode2to4IF is
+begin
+
+process(en , w )
+begin
+	IF en = '1' then
+		IF w = "00" then
+			y = "0001";
+		ELSIF w = "01" then
+			y = "0010";
+		ELSIF w = "10" then
+			y = "0100";
+		ELSE 
+			y = "0001";
+		end if;
+	else 
+		y = "0000";
+	end if;
+end process;
+end;
+```
 ![](../images/Pasted%20image%2020250208123740.png)
+```vhdl
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity decode2to4_tb is 
+end decode2to4_tb;
+
+architecuture behavior of decode2to4_tb is 
+
+component decode2to4
+port(
+	en : in std_logic;
+	w : in std_logic_vector(1 downto 0);
+	y : out std_logic_vector(3 downto 0)
+);
+end component;
+
+component decode2to4IF
+port(
+	en : in std_logic;
+	w : in std_logic_vector(1 downto 0);
+	y : out std_logic_vector(3 downto 0)
+);
+
+	constant period : time := 10 ns;
+
+	signal s_en : std_logic;
+	signal s_w : std_logic_vector(1 downto 0);
+	signal s_y : std_logic_vector(3 downto 0);
+	signal s_yIF : std_logic_vector(3 downto 0);
+
+uut : decode2to4 port map (s_en, s_w , s_y);
+uut2 : decode2to4IF port map (s_en, s_w , s_yIF);
+
+process
+begin
+
+	s_en <= '1';
+	s_w <= "00";
+	wait for period;
+	assert (s_y = "0000" and s_yIF = "0000")
+	report "Mismatch detected for s_w = 00" severity error;
+
+	s_w <= "01";
+	wait for period;
+	assert (s_y = "0001" and s_yIF = "0001")
+	report "Mismatch detected for s_w = 01" severity error;
+
+	s_w <= "10";
+	wait for period;
+	assert (s_y = "0000" and s_yIF = "0000")
+	report "Mismatch detected for s_w = 10" severity error;
+
+	s_w <= "11";
+	wait for period;
+	assert (s_y = "1000" and s_yIF = "1000")
+	report "Mismatch detected for s_w = 11" severity error;
+
+	wait;
+
+end process;
+end ;
+	
+```
 ![](../images/Pasted%20image%2020250208123826.png)
+```vhdl
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity decode4to16 is
+port(
+	en : in std_logic;
+	w : in std_logic_vector(0 to 3);
+	y : out std_logic_vector(0 to 15)
+);
+end entity;
+
+architecture structural of decode4to16 is 
+
+component decode2to4
+port(
+	en : in std_logic;
+	w : in std_logic_vector(1 downto 0);
+	y : out std_logic_vector(3 downto 0)
+);
+end component;
+
+	signal y2 : std_logic_vector(0 to 3);
+
+dec1 : decode2to4 port map (en , w(2 to 3), y2);
+dec2 : decode2to4 port map (y2(0) , w(0 to 1) , y(0 to 3));
+dec3 : decode2to4 port map (y2(1) , w(0 to 1) , y(4 to 7));
+dec4 : decode2to4 port map (y2(2) , w(0 to 1) , y(8 to 11));
+dec5 : decode2to4 port map (y2(3) , w(0 to 1) , y(12 to 15));
+
+end architecture;
+```
 ![](../images/Pasted%20image%2020250208123840.png)
 ![](../images/Pasted%20image%2020250208123852.png)
+```vhdl
+dec1 : decode2to4 portmap (en , w(2 to 3) , y2);
+for i in 0 to 3 generate
+	dec : decode2to4 port map ( y2(i), w(0 to 1) , y(4*i to 4*i + 3) );
+```
 ![](../images/Pasted%20image%2020250208123901.png)
+```
+1100  = 0001 0001 0000 0000
+```
 
 ## Q2
 ![](../images/Pasted%20image%2020250208123915.png)
+```
+a) rising_edge(clk)
+b) falling_edge(clk)
+```
 
+To generate a 10 MHz clock, the period is $$T = \frac{1}{f} = \frac{1}{10\text{ MHz}} = 100 \, \text{ns}$$Half of the period ($T/2$) will be the duration of the high and low states, which is 50 ns.
+```
+clock1 : process begin
+	clock <= '0';
+	wait for 50 ns;
+	clock <= '1';
+	wait for 50 ns;
+end process clock;
+```
 ## Q3
 ![](../images/Pasted%20image%2020250208123927.png)
+```vhdl
+a) s_q <= d & s_q(7 downto 1);
+b) s_q <= s_q(6 downto 0) & d;
+c) s_q <= s_q(0) & s_q(7 downto 1);
+d) s_q <= s_q(6 downto 0) & s_q(7);
+```
