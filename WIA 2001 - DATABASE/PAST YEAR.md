@@ -287,13 +287,48 @@ WHERE SALARY > (SELECT AVG(SALARY) FROM EMPLOYEE );
 ![](../images/Pasted%20image%2020250207121204.png)
 Deadlock occur when two transaction waiting indefinitely for each other to unlock data
 
-3 basic techniques to control deadlock 
-- Deadlock prevention
-- Deadlock avoidance
-- Deadlock Detection
+Three Techniques to Control Deadlock
 
-Importance of concurrency control 
-- 
+1. **Deadlock Prevention:**
+    - Modify the system's resource allocation rules to prevent deadlocks from occurring.
+    - Techniques:
+        - **Mutual Exclusion:** Avoid non-sharable resources unless necessary.
+        - **Hold and Wait:** Require processes to request all resources at once, avoiding partial allocation.
+        - **No Preemption:** Allow resources to be forcibly taken from a process if needed to avoid deadlock.
+        - **Circular Wait:** Impose an ordering on resource requests to avoid circular dependencies.
+
+2. **Deadlock Avoidance:**
+    - Dynamically analyze resource allocation and process states to ensure the system never enters a deadlock state.
+    - Example:
+        - **Banker's Algorithm:** Simulates resource allocation to check if the system remains in a safe state before granting resources.
+3. **Deadlock Detection and Recovery:**
+    
+    - Allow deadlocks to occur but detect them when they happen and recover.
+    - Detection:
+        - Use a resource allocation graph to identify cycles.
+    - Recovery:
+        - Terminate one or more processes to break the deadlock.
+        - Preempt resources from processes involved in the deadlock.
+
+---
+
+Concurrency control ensures that database transactions are executed safely and correctly when multiple users or processes access the database simultaneously.
+
+ **Importance of Concurrency Control:**
+
+1.  **Data Consistency:**
+    
+    - Ensures the database remains in a consistent state even when multiple transactions are executed concurrently.
+2. **Avoidance of Conflicts:**
+    
+    - Prevents conflicts such as lost updates, dirty reads, or uncommitted data from affecting the database.
+3. **System Performance:**
+    
+    - Enables simultaneous access to the database, improving throughput and response times for users.
+
+---
+
+Let me know if you need additional explanations or examples!
 ## Q2
 ![](../images/Pasted%20image%2020250207121231.png)
 
@@ -361,15 +396,15 @@ APPOINTMENT(`AppointID` , No. Staf , No. Pesakit , Tarikh , Masa , Bilik Surgeri
 ![](../images/Pasted%20image%2020250207121353.png)
 The `SELECT` statement in SQL is used to query data from a database. Here’s an explanation of the functions of the clauses mentioned and any restrictions that may apply:
 
-1. **FROM**: 
+4. **FROM**: 
    - **Function**: The `FROM` clause specifies the table or tables from which to retrieve the data. It is a mandatory clause in a `SELECT` statement unless you are selecting from a dummy table (like `DUAL` in some databases) or using a `SELECT` statement without a table reference (e.g., `SELECT 1;`).
    - **Restrictions**: The table(s) specified must exist in the database. If joining multiple tables, you must ensure that the join conditions are correctly specified to avoid Cartesian products.
 
-2. **WHERE**:
+5. **WHERE**:
    - **Function**: The `WHERE` clause is used to filter records based on specified conditions. It allows you to select only those rows that satisfy the given criteria.
    - **Restrictions**: The conditions in the `WHERE` clause must be valid expressions that can be evaluated to true or false. You cannot use aggregate functions directly in the `WHERE` clause; for that, you would use the `HAVING` clause.
 
-3. **GROUP BY**:
+6. **GROUP BY**:
    - **Function**: The `GROUP BY` clause groups rows that have the same values in specified columns into aggregated data. It is often used with aggregate functions like `COUNT`, `SUM`, `AVG`, etc., to perform calculations on each group of rows.
    - **Restrictions**: When using `GROUP BY`, all columns in the `SELECT` list that are not aggregated must be included in the `GROUP BY` clause. This ensures that the grouping is unambiguous.
 
