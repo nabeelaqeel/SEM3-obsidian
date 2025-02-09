@@ -51,10 +51,11 @@ erDiagram
 Primary Key (Given)
 - InvNo
 - MedID
-
+Fully functional dependency
+- InvNo,MedID --> Price
 Partial Dependencies 
 - InvNo --> InvDate , PatID 
-- MedID --> MedName , Desc, Type, Price
+- MedID --> MedName , Desc, Type
 
 Transitive Dependencies
 - PatID --> PatName,PatAdd
@@ -73,20 +74,31 @@ Invitation
 
 Medication
 
-| MedID | MedName | Desc | Type | Price |
-| ----- | ------- | ---- | ---- | ----- |
+| MedID | MedName | Desc | Type |     |
+| ----- | ------- | ---- | ---- | --- |
+
+Invoice_Medication
+
+| MedID | InvNo | Price |
+| ----- | ----- | ----- |
 
 3NF
 
-Invitation
+Invoice
 
 | InvNo | InvDate | PatID |
 | ----- | ------- | ----- |
 
  Medication
  
-| MedID | MedName | Desc | Type | Price |
-| ----- | ------- | ---- | ---- | ----- |
+| MedID | MedName | Desc | Type |     |
+| ----- | ------- | ---- | ---- | --- |
+Invoice_Medication
+
+| MedID | InvNo | Price |
+| ----- | ----- | ----- |
+
+
 
  Patient
 
@@ -273,10 +285,47 @@ WHERE SALARY > (SELECT AVG(SALARY) FROM EMPLOYEE );
 
 ## Q1
 ![](../images/Pasted%20image%2020250207121204.png)
+Deadlock occur when two transaction waiting indefinitely for each other to unlock data
 
+3 basic techniques to control deadlock 
+- Deadlock prevention
+- Deadlock avoidance
+- Deadlock Detection
+
+Importance of concurrency control 
+- 
 ## Q2
 ![](../images/Pasted%20image%2020250207121231.png)
 
+```mermaid
+erDiagram
+    h[Artist] {
+        string ArtistName PK
+        string birthPlace
+        int Age
+        string styleArt
+    }
+    c[Customer] {
+        string CustomerName PK
+        string Address
+        string TotalSpent
+        string artLike
+        string ArtistName FK
+    }
+	a[Artwork]{
+		string ArtistName
+		string yearMade 
+		string Title PK
+		string TypeOfArt
+		float price
+	}
+	g[Group]{
+		string groupName PK
+		string description
+	}
+	
+	
+```
 ## Q3
 ![](../images/Pasted%20image%2020250207121253.png)
 
