@@ -937,16 +937,16 @@ process(en , w )
 begin
 	IF en = '1' then
 		IF w = "00" then
-			y = "0001";
+			y <= "0001";
 		ELSIF w = "01" then
-			y = "0010";
+			y <= "0010";
 		ELSIF w = "10" then
-			y = "0100";
+			y <= "0100";
 		ELSE 
-			y = "0001";
+			y <= "0001";
 		end if;
 	else 
-		y = "0000";
+		y <= "0000";
 	end if;
 end process;
 end;
